@@ -22,8 +22,9 @@ using SafeMath for uint256;
     // Store Products
     // Fetch Product
     mapping(uint => Product) public products;
-    // Store Product Count
+
     uint public LotId;
+    uint public lots_number;
 
     // voted event
     event addedEvent ( uint indexed _lotId);
@@ -33,12 +34,14 @@ using SafeMath for uint256;
         products[LotId] = Product(_supplier_key,LotId, _lot_id, _lots_number, _product_name, _product_number);
     }
 
-    function vote (uint _lotId) public {
-        
+    function Sent (uint Id, uint lots_to_send) public {
         // require a valid Product
-        require(_lotId > 0 && _lotId <= LotId);
+        require(Id > 0 && Id <= LotId && lots_to_send <= lots_number);
+
+        //Change status
+        products[Id].lots_number = lots_number - lots_to_send;
 
         // trigger voted event
-        emit addedEvent (_lotId);
+        emit addedEvent (Id);
     }
 }
