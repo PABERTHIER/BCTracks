@@ -1,0 +1,13 @@
+{
+    "app": {
+        "name": "BCTracks"
+    },
+    "pages": {
+        "default": {
+            "title": "BCTracks"
+        }
+    },
+    "miscellaneous": {
+        "playground": "Playground"
+    }
+}
