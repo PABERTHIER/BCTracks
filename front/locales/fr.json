@@ -4,7 +4,8 @@
     },
     "pages": {
         "default": {
-            "title": "BCTracks"
+            "title": "BCTracks",
+            "write_address": "Entrer votre adresse."
         }
     },
     "miscellaneous": {
