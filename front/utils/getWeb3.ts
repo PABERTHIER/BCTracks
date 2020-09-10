@@ -10,7 +10,7 @@ import Web3 from 'web3'
 
 const getWeb3 = new Promise(function(resolve, reject) {
   // Check for injected web3 (mist/metamask)
-  const web3js = window.web3
+  const web3js = (window as any).web3
   if (typeof web3js !== 'undefined') {
     const web3 = new Web3(web3js.currentProvider)
     resolve({
@@ -53,6 +53,14 @@ const getWeb3 = new Promise(function(resolve, reject) {
   //       })
   //     })
   //   })
+  .then((result) => {
+    return new Promise(function(resolve, reject) {
+      result = Object.assign({}, result, {
+        coinbase: '0xd2c9d8336c43b055e4343503868aba3c8a0e6879',
+      })
+      resolve(result)
+    })
+  })
   .then((result) => {
     return new Promise(function(resolve, reject) {
       // Retrieve balance for coinbase

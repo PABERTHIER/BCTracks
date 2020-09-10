@@ -2,7 +2,10 @@ export interface D {}
 
 export interface M {}
 
-export interface C {}
+export interface C {
+  network: string
+  balance: number
+}
 
 export interface P {
   data: {

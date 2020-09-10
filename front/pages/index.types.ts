@@ -4,7 +4,8 @@ export interface D {
 }
 
 export interface M {
-  registerWeb3?: (address: string) => void
+  // registerWeb3?: (address: string) => void
+  registerWeb3?: () => void
 }
 
 export interface C {

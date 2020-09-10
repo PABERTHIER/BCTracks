@@ -6,10 +6,11 @@
       </slot>
     </nuxt-link>
     <div>
-      <h3 v-t="'pages.default.write_address'" />
-      <input v-model="address" type="text" />
+      <!-- <h3 v-t="'pages.default.write_address'" />
+      <input v-model="address" type="text" /> -->
     </div>
-    <BCTracks v-if="web3 && address" :data="web3" />
+    <!-- <BCTracks v-if="web3 && address" :data="web3" /> -->
+    <BCTracks v-if="web3" :data="web3" />
   </div>
 </template>
 
@@ -35,12 +36,19 @@ export default Vue.extend<D, M, C, P>({
   watch: {
     address(newVal: string) {
       if (newVal !== '') {
-        this.registerWeb3!(this.address)
+        // this.registerWeb3!(this.address)
+        this.registerWeb3!()
       }
     },
   },
+  mounted() {
+    // this.registerWeb3!(this.address)
+    this.registerWeb3!()
+    this.getContractInstance!()
+    // Todo: virer
+  },
   methods: {
-    ...mapActions('tracks', ['registerWeb3']),
+    ...mapActions('tracks', ['getContractInstance', 'registerWeb3']),
   },
   head() {
     return {
