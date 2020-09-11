@@ -19,8 +19,8 @@ export default {
     state.web3.coinbase = payload.coinbase
     state.web3.balance = parseInt(payload.balance, 10)
   },
-  registerContractInstance(state, payload) {
-    console.log('Casino contract instance: ', payload)
+  registerContractInstance(state: ITracksState, payload) {
+    console.log('Track contract instance: ', payload)
     state.contractInstance = () => payload
   },
 }

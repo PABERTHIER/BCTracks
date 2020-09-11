@@ -5,7 +5,11 @@
     "pages": {
         "default": {
             "title": "BCTracks",
-            "write_address": "Entrer votre adresse."
+            "add_product": "Ajouter un produit",
+            "bundleId": "Id du lot",
+            "bundleNumber": "Nombre de lots",
+            "productName": "Nom du produit",
+            "productNumber": "Nombre de produits"
         }
     },
     "components": {

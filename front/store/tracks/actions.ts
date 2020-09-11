@@ -1,10 +1,10 @@
 import { Context } from '@nuxt/types'
 import Web3 from 'web3'
 import webClient from '~/api/webClient'
-import getContract from '~/utils/getContract'
+import contractClient from '~/api/contractClient'
 
 export const actions = {
-  async getAccount(this: Context, { commit }) {
+  async getAccount(this: Context, { commit, dispatch }) {
     try {
       const accounts = await webClient().getAccount()
       const account = accounts[0]
@@ -19,6 +19,7 @@ export const actions = {
     commit('pollWeb3Instance', payload)
   },
   pollWeb3({ state, dispatch }) {
+    // const { ethereum } = window as any
     let web3 = (window as any).web3
     web3 = new Web3((window as any).web3.currentProvider)
 
@@ -51,12 +52,13 @@ export const actions = {
       }
     }, 500)
   },
-  getContractInstance({ commit }) {
-    getContract
-      .then((result) => {
-        commit('registerContractInstance', result)
-      })
-      .catch((e) => console.log(e))
+  async getContractInstance({ commit }) {
+    try {
+      const result = await contractClient().getContract()
+      commit('registerContractInstance', result)
+    } catch (e) {
+      console.log(e)
+    }
   },
 }
 

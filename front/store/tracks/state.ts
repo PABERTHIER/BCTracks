@@ -4,9 +4,9 @@ export const state = (): ITracksState => ({
   web3: {
     isInjected: false,
     web3Instance: null,
-    networkId: null,
-    coinbase: null,
-    balance: null,
+    networkId: 0,
+    coinbase: '',
+    balance: 0,
     error: null,
   },
   contractInstance: null,
