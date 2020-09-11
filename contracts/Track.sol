@@ -34,13 +34,13 @@ using SafeMath for uint256;
     event submitTakeOverEvent ( uint indexed _bundleId, address payable _delivery_key);
     event validateTakeOverEvent ( uint indexed _bundleId, address payable _delivery_key);
 
-    function Add_Bundle (uint _bundle_id, uint  _bundles_nulber, string  memory _product_name, uint _product_number ) public onlyOwner {
+    function Add_Bundle (uint _bundle_id, uint  _bundles_number, string  memory _product_name, uint _product_number ) public onlyOwner {
         total_bundelId ++;
         string memory state = "Available";
         string memory certstate = "Not Certified";
         address payable _none_delivery = address(0);
         address payable _supplier_key = msg.sender;
-        products[total_bundelId] = Product(_supplier_key, _supplier_key, _none_delivery, total_bundelId, _bundle_id, _bundles_nulber, _product_name, _product_number, state, certstate);
+        products[total_bundelId] = Product(_supplier_key, _supplier_key, _none_delivery, total_bundelId, _bundle_id, _bundles_number, _product_name, _product_number, state, certstate);
         emit addedEvent (total_bundelId);
     }
  
@@ -56,9 +56,8 @@ using SafeMath for uint256;
         else {
             total_bundelId ++;
             string memory state = "In Process";
-            products[total_bundelId] = Product(products[Id].supplier_key, products[Id].owner_key, products[Id].delivery_key, total_bundelId, products[Id].bundle_id, _bundles_to_send, products[Id].product_name, products[Id].product_number, state, products[Id].certstate);
+            products[total_bundelId] = Product(products[Id].supplier_key, msg.sender, products[Id].delivery_key, total_bundelId, products[Id].bundle_id, _bundles_to_send, products[Id].product_name, products[Id].product_number, state, products[Id].certstate);
             products[Id].bundles_number = products[Id].bundles_number - _bundles_to_send;
-            products[Id].owner_key = msg.sender;
         }
 
         // trigger bought event
