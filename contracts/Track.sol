@@ -18,6 +18,7 @@ using SafeMath for uint256;
         string product_name;
         uint product_number;
         string state;
+        string certstate;
     }
 
     // Store Products
@@ -26,16 +27,18 @@ using SafeMath for uint256;
 
     uint LotId;
     string state;
+    string certstate;
 
-    // voted event
     event addedEvent ( uint indexed _lotId);
 
+    //Add_lot
     function addProduct (string  memory _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
         LotId ++;
         state = "Available";
-        products[LotId] = Product(_supplier_key,LotId, _lot_id, _lots_number, _product_name, _product_number, state);
+        certstate = "Not certified yet";
+        products[LotId] = Product(_supplier_key,LotId, _lot_id, _lots_number, _product_name, _product_number, state, certstate);
     }
-
+    //command_lot
     function Sent (uint Id, uint lots_to_send) public {
         // require a valid Product
         require(Id > 0 && Id <= LotId && lots_to_send <= products[Id].lots_number);
@@ -48,7 +51,7 @@ using SafeMath for uint256;
         else {
             LotId ++;
             state = "Sent";
-            products[LotId] = Product(products[Id].supplier_key,LotId, products[Id].lot_id, lots_to_send, products[Id].product_name, products[Id].product_number, state);
+            products[LotId] = Product(products[Id].supplier_key,LotId, products[Id].lot_id, lots_to_send, products[Id].product_name, products[Id].product_number, state, );
         
             products[Id].lots_number = products[Id].lots_number - lots_to_send;
         }
@@ -56,24 +59,16 @@ using SafeMath for uint256;
         // trigger voted event
         emit addedEvent (Id);
     }
-    /*  function Validate (uint Id) public {
+    //Certify lot
+    function Certify_lot (uint Id, string memory state) public {
         // require a valid Product
-        require(Id > 0 && Id <= LotId);
+        require(Id > 0 && Id <= LotId && products[Id].certstate =! "Not Certified" );
 
         //Change status
-        
-        if (lots_to_send == products[Id].lots_number) {
-             products[Id].state = "Sent";
-        }
-        else {
-            LotId ++;
-            state = "Sent";
-            products[LotId] = Product(products[Id].supplier_key,LotId, products[Id].lot_id, lots_to_send, products[Id].product_name, products[Id].product_number, state);
-        
-            products[Id].lots_number = products[Id].lots_number - lots_to_send;
-        }
+        certstate = state;
+        products[LotId] = Product(products[Id].supplier_key,LotId, products[Id].lot_id, products[Id].lots_number, products[Id].product_name, products[Id].product_number, state);
         
         // trigger voted event
         emit addedEvent (Id);
-    } */
+    }
 }
