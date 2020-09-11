@@ -29,10 +29,10 @@ using SafeMath for uint256;
     string state;
     string certstate;
 
-    event addedEvent ( uint indexed _lotId);
+    event AddedEvent ( uint indexed _lotId);
 
     //Add_lot
-    function addLots (string  memory _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
+    function AddLots (string  memory _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
         LotId ++;
         state = "Available";
         certstate = "Not certified yet";
@@ -57,10 +57,10 @@ using SafeMath for uint256;
         }
         
         // trigger voted event
-        emit addedEvent (Id);
+        emit AddedEvent (Id);
     }
     //Certify lot
-    function Certify_lot (uint Id, string memory state) public {
+    function Certify_Lots (uint Id, string memory state) public {
         // require a valid Product
         require(Id > 0 && Id <= LotId && products[Id].certstate =! "Not Certified" );
 
@@ -69,6 +69,6 @@ using SafeMath for uint256;
         products[LotId] = Product(products[Id].supplier_key,LotId, products[Id].lot_id, products[Id].lots_number, products[Id].product_name, products[Id].product_number, state);
         
         // trigger voted event
-        emit addedEvent (Id);
+        emit AddedEvent (Id);
     }
 }
