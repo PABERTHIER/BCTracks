@@ -1,4 +1,6 @@
-export interface D {}
+export interface D {
+  toto: string
+}
 
 export interface M {}
 

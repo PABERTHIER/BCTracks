@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    Toto
+    {{ toto }}
   </div>
 </template>
 
@@ -10,11 +10,13 @@ import Vue from 'vue'
 export default Vue.extend({
   components: {},
   data() {
-    return {}
+    return {
+      toto: 'Toto',
+    }
   },
   computed: {},
   methods: {},
 })
 </script>
 
-<style lang="sccs" scoped></style>
+<style lang="scss" scoped></style>

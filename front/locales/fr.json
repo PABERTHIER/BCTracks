@@ -4,10 +4,24 @@
     },
     "pages": {
         "default": {
-            "title": "BCTracks"
+            "title": "BCTracks",
+            "add_product": "Ajouter un produit",
+            "bundleId": "Id du lot",
+            "bundleNumber": "Nombre de lots",
+            "productName": "Nom du produit",
+            "productNumber": "Nombre de produits"
+        }
+    },
+    "components": {
+        "metamask": {
+            "metamask": "Metamask:",
+            "network": "Network:",
+            "account": "Account:",
+            "balance": "Balance:"
         }
     },
     "miscellaneous": {
+        "enable_eth": "Enable Eth",
         "playground": "Playground"
     }
 }
