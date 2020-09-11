@@ -37,11 +37,12 @@ using SafeMath for uint256;
     event submitTakeOverEvent ( uint indexed _lotId, address payable _delivery_key);
     event validateTakeOverEvent ( uint indexed _lotId, address payable _delivery_key);
 
-    function AddLots (address payable _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
+    function AddLots (uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
         LotId ++;
         state = "Available";
         certstate = "Not certified yet";
         address payable _none_delivery = 0x0000000000000000000000000000000000000000;
+        address payable _supplier_key = msg.sender;
         products[LotId] = Product(_supplier_key, _supplier_key, _none_delivery, LotId, _lot_id, _lots_number, _product_name, _product_number, state, certstate);
     }
     //command_lot
