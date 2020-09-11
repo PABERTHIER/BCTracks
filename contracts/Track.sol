@@ -13,7 +13,7 @@ using SafeMath for uint256;
     struct Product {
         address payable supplier_key;
         address payable owner_key;
-        address payable [] delivery_key;
+        address payable delivery_key;
         uint256 id;
         uint lot_id;
         uint lots_number;
@@ -31,14 +31,14 @@ using SafeMath for uint256;
 
     // voted event
     event addedEvent ( uint indexed _lotId);
-    event purposeEvent ( uint indexed _lotId, address payable _delivery_key);
-    event acceptedEvent ( uint indexed _lotId, address payable _delivery_key);
+    event submitTakeOverEvent ( uint indexed _lotId, address payable _delivery_key);
+    event validateTakeOverEvent ( uint indexed _lotId, address payable _delivery_key);
 
     function addProduct (address payable _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
         LotId ++;
         state = "Available";
-        address payable [] memory delivery_keys;
-        products[LotId] = Product(_supplier_key, _supplier_key, delivery_keys, LotId, _lot_id, _lots_number, _product_name, _product_number, state);
+        address payable _none_delivery = 0x0000000000000000000000000000000000000000;
+        products[LotId] = Product(_supplier_key, _supplier_key, _none_delivery, LotId, _lot_id, _lots_number, _product_name, _product_number, state);
     }
 
     function Sent (uint Id, uint lots_to_send) public {
@@ -62,36 +62,29 @@ using SafeMath for uint256;
         emit addedEvent (Id);
     }
 
-    function Purpose_takeOver_Lot (uint _lot_Id) public {
+    function Submit_takeOver_Lot (uint _lot_Id, address payable _delivery_key) public {
         // require a valid Product
         require(_lot_Id > 0 && _lot_Id <= LotId && keccak256(abi.encodePacked(products[_lot_Id].state)) ==  keccak256("On Preparation"));
 
         //Add a delivery purpose
-        products[_lot_Id].delivery_key.push(msg.sender);
+        products[_lot_Id].delivery_key = _delivery_key;
         
         // trigger purpose event
-        emit purposeEvent(_lot_Id, msg.sender);
+        emit submitTakeOverEvent(_lot_Id, _delivery_key);
     }
 
-    function Accepted_takeOver_Lot (uint _lot_Id, address payable _delivery_key) public {
+    function Accepted_takeOver_Lot (uint _lot_Id) public {
         // require a valid Product
         require(_lot_Id > 0 && _lot_Id <= LotId && keccak256(abi.encodePacked(products[_lot_Id].state)) ==  keccak256("On Preparation"));
 
-        // require a valid delivery key
-        bool is_implemented = false;
-        for(uint increment = 0; increment < products[_lot_Id].delivery_key.length; increment++){
-            if(products[_lot_Id].delivery_key[increment] == _delivery_key){
-                is_implemented = true;
-            }
-        }
-        require(is_implemented);
+        // require a valid Sender
+        require(msg.sender == products[_lot_Id].delivery_key); 
 
         // update status
-        products[_lot_Id].delivery_key = [_delivery_key];
         products[_lot_Id].state = "Sent";
         
         // trigger purpose event
-        emit purposeEvent(_lot_Id, products[_lot_Id].delivery_key[0]);
+        emit validateTakeOverEvent(_lot_Id, products[_lot_Id].delivery_key);
     }
 
 }
