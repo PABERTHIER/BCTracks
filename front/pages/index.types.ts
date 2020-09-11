@@ -1,23 +1,21 @@
 export interface D {
-  address: string
   playgroundLink: string
 }
 
 export interface M {
-  // registerWeb3?: (address: string) => void
-  registerWeb3?: () => void
+  getAccount?: () => void
+  getContractInstance?: () => void
 }
 
 export interface C {
   web3?: {
     isInjected: boolean
     web3Instance: any
-    networkId: any
-    coinbase: any
-    balance: any
+    networkId: number
+    coinbase: string
+    balance: number
     error: any
   }
-  // Todo: type
 }
 
 export interface P {}

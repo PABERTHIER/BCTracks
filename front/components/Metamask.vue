@@ -1,9 +1,21 @@
 <template>
   <div class="metamask">
-    <p>Metamask: {{ data.isInjected }}</p>
-    <p>Network: {{ network }}</p>
-    <p>Account: {{ data.coinbase }}</p>
-    <p>Balance: {{ balance }}</p>
+    <div class="container">
+      <div v-t="'components.metamask.metamask'" class="header" />
+      <div>{{ data.isInjected }}</div>
+    </div>
+    <div class="container">
+      <div v-t="'components.metamask.network'" class="header" />
+      <div>{{ network }}</div>
+    </div>
+    <div class="container">
+      <div v-t="'components.metamask.account'" class="header" />
+      <div>{{ data.coinbase }}</div>
+    </div>
+    <div class="container">
+      <div v-t="'components.metamask.balance'" class="header" />
+      <div>{{ balance }}</div>
+    </div>
   </div>
 </template>
 
@@ -35,4 +47,13 @@ export default Vue.extend<D, M, C, P>({
 })
 </script>
 
-<style lang="sccs" scoped></style>
+<style lang="scss" scoped>
+.metamask {
+  .container {
+    display: flex;
+    .header {
+      margin-right: 5px;
+    }
+  }
+}
+</style>

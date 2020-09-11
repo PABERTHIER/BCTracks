@@ -5,11 +5,13 @@
         <button v-t="'miscellaneous.playground'" class="playground-button" />
       </slot>
     </nuxt-link>
-    <div>
-      <!-- <h3 v-t="'pages.default.write_address'" />
-      <input v-model="address" type="text" /> -->
+    <div class="enable">
+      <button
+        v-t="'miscellaneous.enable_eth'"
+        class="enable-button"
+        @click="getAccount()"
+      />
     </div>
-    <!-- <BCTracks v-if="web3 && address" :data="web3" /> -->
     <BCTracks v-if="web3" :data="web3" />
   </div>
 </template>
@@ -26,29 +28,18 @@ export default Vue.extend<D, M, C, P>({
   },
   data() {
     return {
-      address: '',
       playgroundLink: '/playground/playground',
     }
   },
   computed: {
     ...mapState('tracks', ['web3']),
   },
-  watch: {
-    address(newVal: string) {
-      if (newVal !== '') {
-        // this.registerWeb3!(this.address)
-        this.registerWeb3!()
-      }
-    },
-  },
-  mounted() {
-    // this.registerWeb3!(this.address)
-    this.registerWeb3!()
-    this.getContractInstance!()
-    // Todo: virer
-  },
+  // mounted() {
+  //   this.getContractInstance!()
+  //   // Todo: virer
+  // },
   methods: {
-    ...mapActions('tracks', ['getContractInstance', 'registerWeb3']),
+    ...mapActions('tracks', ['getAccount', 'getContractInstance']),
   },
   head() {
     return {
@@ -59,7 +50,8 @@ export default Vue.extend<D, M, C, P>({
 </script>
 
 <style lang="scss" scoped>
-.playground-button {
+.playground-button,
+.enable-button {
   width: 150px;
   height: 35px;
   background-color: $red;
@@ -69,5 +61,9 @@ export default Vue.extend<D, M, C, P>({
   font-size: 15px;
   opacity: 0.7;
   cursor: pointer;
+}
+.enable {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 </style>

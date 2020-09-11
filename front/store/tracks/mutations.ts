@@ -2,10 +2,8 @@ import { ITracksState } from './type'
 
 export default {
   registerWeb3Instance(state: ITracksState, payload) {
-    console.log('registerWeb3instance Mutation being executed', payload)
     const result = payload
     const web3Copy = state.web3
-    web3Copy.coinbase = result.coinbase
     web3Copy.networkId = result.networkId
     web3Copy.balance = parseInt(result.balance, 10)
     web3Copy.isInjected = result.injectedWeb3
@@ -13,7 +11,10 @@ export default {
     state.web3 = web3Copy
     // pollWeb3()
   },
-  pollWeb3Instance(state, payload) {
+  setAccount(state: ITracksState, payload) {
+    state.web3.coinbase = payload
+  },
+  pollWeb3Instance(state: ITracksState, payload) {
     console.log('pollWeb3Instance mutation being executed', payload)
     state.web3.coinbase = payload.coinbase
     state.web3.balance = parseInt(payload.balance, 10)

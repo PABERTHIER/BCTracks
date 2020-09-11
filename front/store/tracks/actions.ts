@@ -1,39 +1,26 @@
 import { Context } from '@nuxt/types'
 import Web3 from 'web3'
 import webClient from '~/api/webClient'
-import getWeb3 from '~/utils/getWeb3'
 import getContract from '~/utils/getContract'
 
 export const actions = {
-  // async registerWeb3(this: Context, { commit }, payload: string) {
-  //   try {
-  //     const result = await webClient().getWeb3(payload)
-  //     // result = await webClient().getNetwork(result)
-  //     // result = await webClient().getBalance(payload, result)
-  //     console.log(result)
-  //     commit('registerWeb3Instance', result)
-  //   } catch (e) {
-  //     console.log('error in action registerWeb3', e)
-  //   }
-  registerWeb3({ commit, dispatch }) {
-    console.log('registerWeb3 Action being executed')
-    getWeb3
-      .then(async (result) => {
-        console.log('committing result to registerWeb3Instance mutation')
-        await commit('registerWeb3Instance', result)
-        // dispatch('pollWeb3')
-      })
-      .catch((e) => {
-        console.log('error in action registerWeb3', e)
-      })
-  }, // Todo: c'est de la merde
+  async getAccount(this: Context, { commit }) {
+    try {
+      const accounts = await webClient().getAccount()
+      const account = accounts[0]
+      commit('setAccount', accounts[0])
+      const result = await webClient().getWeb3(account)
+      commit('registerWeb3Instance', result)
+      // dispatch('pollWeb3')
+    } catch {}
+  },
   pollWeb3Dispatch({ commit }, payload) {
     console.log('pollWeb3 action being executed')
     commit('pollWeb3Instance', payload)
   },
   pollWeb3({ state, dispatch }) {
     let web3 = (window as any).web3
-    web3 = new Web3(web3.currentProvider)
+    web3 = new Web3((window as any).web3.currentProvider)
 
     setInterval(() => {
       if (web3 && state.web3.web3Instance) {

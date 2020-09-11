@@ -8,10 +8,9 @@ export interface P {
   data: {
     isInjected: boolean
     web3Instance: any
-    networkId: any
-    coinbase: any
-    balance: any
+    networkId: number
+    coinbase: string
+    balance: number
     error: any
   }
-  // Todo: type
 }

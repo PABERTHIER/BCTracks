@@ -27,4 +27,4 @@ export default Vue.extend<D, M, C, P>({
 })
 </script>
 
-<style lang="sccs" scoped></style>
+<style lang="scss" scoped></style>

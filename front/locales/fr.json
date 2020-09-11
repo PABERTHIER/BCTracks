@@ -8,7 +8,16 @@
             "write_address": "Entrer votre adresse."
         }
     },
+    "components": {
+        "metamask": {
+            "metamask": "Metamask:",
+            "network": "Network:",
+            "account": "Account:",
+            "balance": "Balance:"
+        }
+    },
     "miscellaneous": {
+        "enable_eth": "Enable Eth",
         "playground": "Playground"
     }
 }
