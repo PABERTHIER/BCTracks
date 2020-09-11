@@ -32,7 +32,7 @@ using SafeMath for uint256;
     event addedEvent ( uint indexed _lotId);
 
     //Add_lot
-    function addProduct (string  memory _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
+    function addLots (string  memory _supplier_key, uint _lot_id, uint  _lots_number, string  memory _product_name, uint _product_number ) public onlyOwner {
         LotId ++;
         state = "Available";
         certstate = "Not certified yet";
