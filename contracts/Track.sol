@@ -62,7 +62,7 @@ using SafeMath for uint256;
     //Certify lot
     function Certify_Lots (uint Id, string memory state) public {
         // require a valid Product
-        require(Id > 0 && Id <= LotId && products[Id].certstate =! "Not Certified" );
+        require(Id > 0 && Id <= LotId && products[Id].certstate =! "Unsalable" );
 
         //Change status
         certstate = state;
@@ -71,4 +71,8 @@ using SafeMath for uint256;
         // trigger voted event
         emit AddedEvent (Id);
     }
+
+
+
+
 }
