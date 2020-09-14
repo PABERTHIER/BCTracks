@@ -1,4 +1,4 @@
-const address = '0xa185E8266a135906e07269A86F8a0C6d2a9F79CA'
+const address = '0x079Cb2D2b9A1B790c2788d11E8F22154ad5e13c6'
 // Todo: mettre à jour adresse du contrat
 const ABI = [
   {
