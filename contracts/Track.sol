@@ -46,7 +46,7 @@ using SafeMath for uint256;
  
     function Buy_Bundle (uint Id, uint _bundles_to_send) public {
         // require a valid Product
-        require(Id > 0 && Id <= total_bundelId && _bundles_to_send <= products[Id].bundles_number);
+        require(Id > 0 && Id <= total_bundelId && _bundles_to_send <= products[Id].bundles_number && keccak256(abi.encodePacked(products[Id].certstate)) != keccak256("Unsalable"));
 
         //Change status
         if (_bundles_to_send == products[Id].bundles_number) {
@@ -63,6 +63,7 @@ using SafeMath for uint256;
         // trigger bought event
         emit boughtEvent (Id, products[Id].owner_key);
     }
+
     function Submit_takeOver_Bundle (uint _bundle_id, address payable _delivery_key) public {
         // require a valid Product
         require(_bundle_id > 0 && _bundle_id <= total_bundelId && keccak256(abi.encodePacked(products[_bundle_id].state)) ==  keccak256("In Process"));
@@ -87,15 +88,29 @@ using SafeMath for uint256;
         // trigger purpose event
         emit validateTakeOverEvent(_bundle_id, products[_bundle_id].delivery_key);
     }
-    function Certify_Lots (uint Id, string memory state0) public {
-        // require a valid Product
-        require(Id > 0 && Id <= total_bundelId && keccak256(abi.encodePacked(products[Id].certstate)) != keccak256("Unsalable" ));
+    
+    // function Certify_Bundles (address payable[] memory _suppliers, uint[] memory _suppliers_bundleIds, string[] memory  _suppliers_bundleStatus) public {
+        //USE BOOL FOR STATUS
+    //     // require a valid Product
+    //     for(uint increment; increment < _suppliers.length; increment++){
+    //         require(_suppliers[increment].bundle_id > 0 && (keccak256(abi.encodePacked(_suppliers[increment].state)) == keccak256("Unsalable") || keccak256(abi.encodePacked(_suppliers[increment].state)) == keccak256("Certificed")));
 
-        //Change status
-        string memory certstate = state0;
-        products[total_bundelId] = Product(products[Id].supplier_key, products[Id].owner_key, products[Id].delivery_key, products[Id].id, products[Id].bundle_id, products[Id].bundles_number, products[Id].product_name, products[Id].product_number, products[Id].state, certstate);
-        
-        // trigger voted event
-        emit addedEvent (Id);
+
+            
+    //     }
+    // }
+
+    function Change_BundleState (address payable _supplier, uint _bundleId, string memory _bundleState) public returns(bool) {
+        require((keccak256(abi.encodePacked(_bundleState)) == keccak256("Unsalable") || keccak256(abi.encodePacked(_bundleState)) == keccak256("Certificed")), "Status Unknow");
+        bool isFound = false;
+        for(uint increment = 1; increment < total_bundelId; increment++){
+            if(products[increment].supplier_key == _supplier && products[increment].bundle_id == _bundleId){
+                isFound = true;
+                require(keccak256(abi.encodePacked(products[increment].certstate)) != keccak256("Unsalable"), "One product already unsalable for supplier selected");
+                products[increment].certstate = _bundleState;
+            }
+        }
+        require(isFound, "No match found for supplier and product found");
+        return isFound;
     }
 }
