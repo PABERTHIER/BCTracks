@@ -18,7 +18,7 @@ export default () => ({
         throw new TypeError('Unable to connect to Metamask')
       }
     } catch {
-      throw new TypeError('Error toto')
+      throw new Error('Unable to connect to Metamask')
     }
   },
   async getAccount() {

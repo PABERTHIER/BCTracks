@@ -5,11 +5,12 @@
     "pages": {
         "default": {
             "title": "BCTracks",
-            "add_product": "Ajouter un produit",
+            "add_product": "Ajouter un lot",
             "bundleId": "Id du lot",
             "bundleNumber": "Nombre de lots",
             "productName": "Nom du produit",
-            "productNumber": "Nombre de produits"
+            "productNumber": "Nombre de produits",
+            "add_success": "Ajout du lot réalisé avec succès !"
         }
     },
     "components": {
@@ -22,6 +23,10 @@
     },
     "miscellaneous": {
         "enable_eth": "Enable Eth",
-        "playground": "Playground"
+        "playground": "Playground",
+        "error": "Erreur",
+        "success": "Succès",
+        "info": "Info",
+        "connected": "Connexion au compte Ethereum réussie !"
     }
 }

@@ -61,7 +61,6 @@ export default Vue.extend<D, M, C, P>({
     return {
       playgroundLink: '/playground/playground',
       data: {
-        supplierKey: '',
         bundleId: 0,
         bundleNumber: 0,
         productName: '',
@@ -77,12 +76,35 @@ export default Vue.extend<D, M, C, P>({
   },
   methods: {
     ...mapActions('tracks', ['getAccount', 'getContractInstance']),
-    addProduct() {
-      if (this.web3!.coinbase) {
-        this.data.supplierKey = this.web3!.coinbase
-        console.log(this.contractInstance())
-        // this.contractInstance().addBundles(this.data)
-        // this.dispatchAddProduct!(this.data)
+    async addProduct() {
+      try {
+        if (this.web3!.coinbase) {
+          console.log(this.contractInstance())
+          await this.contractInstance().Add_Bundle(
+            this.data.bundleId,
+            this.data.bundleNumber,
+            this.data.productName,
+            this.data.productNumber,
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const successMsg = this.$t(
+                  'pages.default.add_success'
+                ) as string
+                this.$notify(successMsg, '', 'success', 5_000)
+              }
+            }
+          )
+        }
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
       }
     },
   },

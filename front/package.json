@@ -11,7 +11,8 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "test": "jest"
+    "test": "jest",
+    "svg": "vsvg -s ./assets/svg -t ./components/icons"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "0.4.10",

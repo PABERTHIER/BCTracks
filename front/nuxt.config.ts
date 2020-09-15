@@ -26,7 +26,7 @@ const config: Configuration = {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/i18n'],
+  plugins: ['~/plugins/i18n', '~/plugins/notifications', '~/plugins/svg'],
   /*
    ** Nuxt.js dev-modules
    */

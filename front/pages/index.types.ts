@@ -1,7 +1,6 @@
 export interface D {
   playgroundLink: string
   data: {
-    supplierKey: string
     bundleId: number
     bundleNumber: number
     productName: string
