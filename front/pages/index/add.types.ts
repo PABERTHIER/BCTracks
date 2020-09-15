@@ -1,10 +1,14 @@
 export interface D {
-  playgroundLink: string
+  data: {
+    bundleId: number
+    bundleNumber: number
+    productName: string
+    productNumber: number
+  }
 }
 
 export interface M {
-  getAccount?: () => void
-  getContractInstance?: () => void
+  addBundle: () => void
 }
 
 export interface C {
@@ -17,7 +21,6 @@ export interface C {
     error: any
   }
   contractInstance?: any
-  connection: { status: string; class: string }
 }
 
 export interface P {}
