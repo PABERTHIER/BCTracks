@@ -6,24 +6,48 @@
     <div id="bodyContainer">
       <div id="mainContainer">
         <div id="mainContainerScrollable">
-          <nuxt />
+          <transition name="page">
+            <nuxt />
+          </transition>
         </div>
       </div>
     </div>
+    <transition-group id="notifsContainer" name="notification" tag="div">
+      <div
+        v-for="notification in notifications"
+        :key="notification.id"
+        class="notifs-container"
+      >
+        <Notification
+          :title="notification.title"
+          :msg="notification.msg"
+          :type="notification.type"
+          @close="deleteNotification(notification.id)"
+        />
+      </div>
+    </transition-group>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapState, mapMutations } from 'vuex'
+import Notification from '~/components/Notification.vue'
 import { D, M, C, P } from '~/types/layouts/default.types'
 
 export default Vue.extend<D, M, C, P>({
+  components: {
+    Notification,
+  },
   computed: {
+    ...mapState('notifications', ['notifications']),
     header() {
       return this.$t('pages.default.title') as string
     },
   },
-  methods: {},
+  methods: {
+    ...mapMutations('notifications', ['deleteNotification']),
+  },
 })
 </script>
 
@@ -78,6 +102,15 @@ body {
 #mainContainerScrollable {
   position: relative;
   height: 100%;
+}
+#notifsContainer {
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 10;
+  .notifs-container {
+    margin-top: 10px;
+  }
 }
 .page-container {
   height: 100%;

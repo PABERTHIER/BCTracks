@@ -12,13 +12,43 @@ export const actions = {
       const result = await webClient().getWeb3(account)
       commit('registerWeb3Instance', result)
       // dispatch('pollWeb3')
-    } catch {}
+      dispatch(
+        'notifications/addNotification',
+        {
+          title: (this.app.i18n as any).t('miscellaneous.success') as string,
+          msg: (this.app.i18n as any).t('miscellaneous.connected') as string,
+          type: 'success',
+          time: 5_000,
+        },
+        { root: true }
+      )
+    } catch (exception) {
+      dispatch(
+        'notifications/addNotification',
+        {
+          title: (this.app.i18n as any).t('miscellaneous.error') as string,
+          msg: exception as string,
+          type: 'error',
+          time: 5_000,
+        },
+        { root: true }
+      )
+    }
   },
-  pollWeb3Dispatch({ commit }, payload) {
-    console.log('pollWeb3 action being executed')
+  pollWeb3Dispatch(this: Context, { commit, dispatch }, payload) {
+    dispatch(
+      'notifications/addNotification',
+      {
+        title: (this.app.i18n as any).t('miscellaneous.info') as string,
+        msg: 'pollWeb3 action being executed',
+        type: 'info',
+        time: 5_000,
+      },
+      { root: true }
+    )
     commit('pollWeb3Instance', payload)
   },
-  pollWeb3({ state, dispatch }) {
+  pollWeb3(this: Context, { state, dispatch }) {
     // const { ethereum } = window as any
     let web3 = (window as any).web3
     web3 = new Web3((window as any).web3.currentProvider)
@@ -29,7 +59,18 @@ export const actions = {
           const newCoinbase = web3.eth.coinbase
           web3.eth.getBalance(web3.eth.coinbase, function(err, newBalance) {
             if (err) {
-              console.log(err)
+              dispatch(
+                'notifications/addNotification',
+                {
+                  title: (this.app.i18n as any).t(
+                    'miscellaneous.error'
+                  ) as string,
+                  msg: err as string,
+                  type: 'error',
+                  time: 5_000,
+                },
+                { root: true }
+              )
             } else {
               dispatch('pollWeb3Dispatch', {
                 coinbase: newCoinbase,
@@ -40,7 +81,18 @@ export const actions = {
         } else {
           web3.eth.getBalance(state.web3.coinbase, (err, polledBalance) => {
             if (err) {
-              console.log(err)
+              dispatch(
+                'notifications/addNotification',
+                {
+                  title: (this.app.i18n as any).t(
+                    'miscellaneous.error'
+                  ) as string,
+                  msg: err as string,
+                  type: 'error',
+                  time: 5_000,
+                },
+                { root: true }
+              )
             } else if (parseInt(polledBalance, 10) !== state.web3.balance) {
               dispatch('pollWeb3Dispatch', {
                 coinbase: state.web3.coinbase,
@@ -52,12 +104,21 @@ export const actions = {
       }
     }, 500)
   },
-  async getContractInstance({ commit }) {
+  async getContractInstance(this: Context, { commit, dispatch }) {
     try {
       const result = await contractClient().getContract()
       commit('registerContractInstance', result)
     } catch (e) {
-      console.log(e)
+      dispatch(
+        'notifications/addNotification',
+        {
+          title: (this.app.i18n as any).t('miscellaneous.error') as string,
+          msg: e as string,
+          type: 'error',
+          time: 5_000,
+        },
+        { root: true }
+      )
     }
   },
 }
