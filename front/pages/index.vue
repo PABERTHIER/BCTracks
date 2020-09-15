@@ -92,7 +92,7 @@ export default Vue.extend<D, M, C, P>({
             (err, result) => {
               if (err) {
                 const errorMsg = this.$t('miscellaneous.error') as string
-                this.$notify(errorMsg, err, 'error', 5_000)
+                this.$notify(errorMsg, err.message, 'error', 5_000)
               } else {
                 const successMsg = this.$t(
                   'pages.default.add_success'

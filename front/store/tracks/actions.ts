@@ -27,7 +27,7 @@ export const actions = {
         'notifications/addNotification',
         {
           title: (this.app.i18n as any).t('miscellaneous.error') as string,
-          msg: exception as string,
+          msg: exception.message as string,
           type: 'error',
           time: 5_000,
         },
@@ -57,7 +57,7 @@ export const actions = {
       if (web3 && state.web3.web3Instance) {
         if (web3.eth.coinbase !== state.web3.coinbase) {
           const newCoinbase = web3.eth.coinbase
-          web3.eth.getBalance(web3.eth.coinbase, function(err, newBalance) {
+          web3.eth.getBalance(web3.eth.coinbase, (err, newBalance) => {
             if (err) {
               dispatch(
                 'notifications/addNotification',
@@ -65,7 +65,7 @@ export const actions = {
                   title: (this.app.i18n as any).t(
                     'miscellaneous.error'
                   ) as string,
-                  msg: err as string,
+                  msg: err.message as string,
                   type: 'error',
                   time: 5_000,
                 },
@@ -87,7 +87,7 @@ export const actions = {
                   title: (this.app.i18n as any).t(
                     'miscellaneous.error'
                   ) as string,
-                  msg: err as string,
+                  msg: err.message as string,
                   type: 'error',
                   time: 5_000,
                 },
@@ -113,7 +113,7 @@ export const actions = {
         'notifications/addNotification',
         {
           title: (this.app.i18n as any).t('miscellaneous.error') as string,
-          msg: e as string,
+          msg: e.message as string,
           type: 'error',
           time: 5_000,
         },
