@@ -108,18 +108,7 @@ export const actions = {
     try {
       const result = await contractClient().getContract()
       commit('registerContractInstance', result)
-    } catch (e) {
-      dispatch(
-        'notifications/addNotification',
-        {
-          title: (this.app.i18n as any).t('miscellaneous.error') as string,
-          msg: e.message as string,
-          type: 'error',
-          time: 5_000,
-        },
-        { root: true }
-      )
-    }
+    } catch {}
   },
 }
 

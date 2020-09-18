@@ -5,12 +5,34 @@
     "pages": {
         "default": {
             "title": "BCTracks",
-            "add_product": "Ajouter un lot",
-            "bundleId": "Id du lot",
-            "bundleNumber": "Nombre de lots",
-            "productName": "Nom du produit",
-            "productNumber": "Nombre de produits",
-            "add_success": "Ajout du lot réalisé avec succès !"
+            "connected": "Connecté",
+            "disconnected": "Non connecté",
+            "links": {
+                "add_bundle": "Ajouter un lot",
+                "buy_bundle": "Acheter un lot",
+                "certify_bundle": "Certifier un lot",
+                "takeover": "Prise en charge"
+            }
+        },
+        "index": {
+            "add": {
+                "title": "Ajouter un lot",
+                "add_bundle": "Ajouter un lot",
+                "bundleId": "Id du lot",
+                "bundleNumber": "Nombre de lots",
+                "productName": "Nom du produit",
+                "productNumber": "Nombre de produits",
+                "add_success": "Ajout du lot réalisé avec succès !"
+            },
+            "buy": {
+                "title": "Acheter un lot"
+            },
+            "certify": {
+                "title": "Certifier un Lot"
+            },
+            "takeover": {
+                "title": "Prise en charge"
+            }
         }
     },
     "components": {
@@ -22,11 +44,11 @@
         }
     },
     "miscellaneous": {
-        "enable_eth": "Enable Eth",
-        "playground": "Playground",
+        "enable_eth": "Connexion",
         "error": "Erreur",
         "success": "Succès",
         "info": "Info",
-        "connected": "Connexion au compte Ethereum réussie !"
+        "connected": "Connexion au compte Ethereum réussie !",
+        "contract": "Contrat"
     }
 }

@@ -70,7 +70,8 @@ header {
   text-align: center;
   font-size: 25px;
   padding-top: 50px;
-  margin-bottom: 150px;
+  padding-bottom: 100px;
+  background-color: $background-color-second;
 }
 body {
   height: 100vh;
@@ -91,13 +92,13 @@ body {
   flex: 1;
   display: flex;
   overflow: hidden;
-  background-color: $background-color;
+  background-color: $background-color-second;
 }
 #mainContainer {
   flex: 1;
   height: 100%;
   overflow-y: auto;
-  background-color: $background-color;
+  background-color: $background-color-second;
 }
 #mainContainerScrollable {
   position: relative;
