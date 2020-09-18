@@ -9,7 +9,9 @@
             "disconnected": "Non connecté",
             "links": {
                 "add_bundle": "Ajouter un lot",
-                "buy_bundle": "Acheter un lot"
+                "buy_bundle": "Acheter un lot",
+                "certify_bundle": "Certifier un lot",
+                "takeover": "Prise en charge"
             }
         },
         "index": {
@@ -24,6 +26,12 @@
             },
             "buy": {
                 "title": "Acheter un lot"
+            },
+            "certify": {
+                "title": "Certifier un Lot"
+            },
+            "takeover": {
+                "title": "Prise en charge"
             }
         }
     },
@@ -36,8 +44,7 @@
         }
     },
     "miscellaneous": {
-        "enable_eth": "Enable Eth",
-        "playground": "Playground",
+        "enable_eth": "Connexion",
         "error": "Erreur",
         "success": "Succès",
         "info": "Info",

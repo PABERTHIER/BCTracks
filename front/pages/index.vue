@@ -1,13 +1,8 @@
 <template>
   <div class="page-container">
-    <nuxt-link :to="playgroundLink">
-      <slot>
-        <button v-t="'miscellaneous.playground'" class="playground-button" />
-      </slot>
-    </nuxt-link>
-
     <div class="enable">
       <button
+        v-if="connection.status === 'disconnected'"
         v-t="'miscellaneous.enable_eth'"
         class="enable-button"
         @click="getAccount()"
@@ -19,11 +14,16 @@
       />
     </div>
     <div v-t="`pages.default.${connection.status}`" :class="connection.class" />
-    <BCTracks v-if="web3" :data="web3" />
+    <BCTracks v-if="web3 && connection.status === 'connected'" :data="web3" />
     <div class="route">
       <div class="links">
         <nuxt-link v-t="'pages.default.links.add_bundle'" :to="'/add'" />
         <nuxt-link v-t="'pages.default.links.buy_bundle'" :to="'/buy'" />
+        <nuxt-link
+          v-t="'pages.default.links.certify_bundle'"
+          :to="'/certify'"
+        />
+        <nuxt-link v-t="'pages.default.links.takeover'" :to="'/takeover'" />
       </div>
       <div class="route-content">
         <nuxt-child />
@@ -43,9 +43,7 @@ export default Vue.extend<D, M, C, P>({
     BCTracks,
   },
   data() {
-    return {
-      playgroundLink: '/playground/playground',
-    }
+    return {}
   },
   computed: {
     ...mapState('tracks', ['web3', 'contractInstance']),
@@ -77,7 +75,6 @@ export default Vue.extend<D, M, C, P>({
 </script>
 
 <style lang="scss" scoped>
-.playground-button,
 .enable-button {
   width: 150px;
   height: 35px;
@@ -111,31 +108,32 @@ export default Vue.extend<D, M, C, P>({
   .links {
     margin-top: 50px;
     display: flex;
+    height: 50px;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: $grey;
+      padding: 0 48px;
+      box-sizing: content-box;
+      border-top: 3px solid $background-color;
+      border-bottom: 3px solid $background-color;
+      white-space: nowrap;
+      &.nuxt-link-exact-active,
+      &:hover {
+        color: $black;
+        text-shadow: 0 0 0.65px $black;
+        border-bottom: 3px solid $red;
+      }
+    }
   }
   .route-content {
-    margin-top: 50px;
     position: relative;
     overflow: hidden;
     z-index: 0;
-  }
-}
-a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: $grey;
-  padding: 0 48px;
-  box-sizing: content-box;
-  border-top: 3px solid $background-color;
-  border-bottom: 3px solid $background-color;
-  white-space: nowrap;
-  &.nuxt-link-exact-active,
-  &:hover {
-    color: $black;
-    text-shadow: 0 0 0.65px $black;
-    border-bottom: 3px solid $black;
+    margin-bottom: 15px;
   }
 }
 </style>

@@ -1,10 +1,9 @@
-export interface D {
-  playgroundLink: string
-}
+export interface D {}
 
 export interface M {
   getAccount?: () => void
   getContractInstance?: () => void
+  contract: () => void
 }
 
 export interface C {

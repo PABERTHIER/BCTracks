@@ -1,5 +1,5 @@
 <template>
-  <div class="add">
+  <div class="child-page">
     <h1 v-t="'pages.index.add.title'" />
     <div class="bloc">
       <div v-t="'pages.index.add.bundleId'" />
@@ -91,7 +91,8 @@ export default Vue.extend<D, M, C, P>({
 </script>
 
 <style lang="scss" scoped>
-.add {
+.child-page {
+  background-color: #fcfafa;
   .bloc {
     margin-bottom: 10px;
   }
