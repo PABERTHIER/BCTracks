@@ -19,6 +19,7 @@ using SafeMath for uint256;
         uint bundles_number;
         string product_name;
         uint product_number;
+        uint sale_date;
         string state;
         string certstate;
     }
@@ -42,7 +43,7 @@ using SafeMath for uint256;
         string memory certstate = "Not Certified";
         address payable _none_delivery = address(0);
         address payable _supplier_key = msg.sender;
-        products[total_bundelId] = Product(_supplier_key, _supplier_key, _none_delivery, increment_bundelId, _bundle_id, _bundles_number, _product_name, _product_number, state, certstate);
+        products[total_bundelId] = Product(_supplier_key, _supplier_key, _none_delivery, increment_bundelId, _bundle_id, _bundles_number, _product_name, _product_number, 0, state, certstate);
         emit addedEvent (increment_bundelId);
     }
 
@@ -61,7 +62,7 @@ using SafeMath for uint256;
             }
         }
         if(isFound){
-            products[total_bundelId] = Product(address(0), address(0), address(0), 0, 0, 0, "", 0, "", "");
+            products[total_bundelId] = Product(address(0), address(0), address(0), 0, 0, 0, "", 0, 0, "", "");
             total_bundelId --;
         }
 
@@ -77,12 +78,13 @@ using SafeMath for uint256;
                 if (_bundles_to_send == products[increment].bundles_number) {
                     products[increment].state = "In Process";
                     products[increment].owner_key = msg.sender;
+                    products[increment].sale_date = block.timestamp;
                 }
                 else {
                     total_bundelId ++;
                     increment_bundelId ++;
                     string memory state = "In Process";
-                    products[total_bundelId] = Product(products[increment].supplier_key, msg.sender, products[increment].delivery_key, increment_bundelId, products[increment].bundle_id, _bundles_to_send, products[increment].product_name, products[increment].product_number, state, products[increment].certstate);
+                    products[total_bundelId] = Product(products[increment].supplier_key, msg.sender, products[increment].delivery_key, increment_bundelId, products[increment].bundle_id, _bundles_to_send, products[increment].product_name, products[increment].product_number, block.timestamp, state, products[increment].certstate);
                     products[increment].bundles_number = products[increment].bundles_number - _bundles_to_send;
                 }
             }
@@ -124,6 +126,7 @@ using SafeMath for uint256;
     }
 
     function Change_BundleState (address payable _supplier, uint _bundleId, string memory _bundleState) public returns(bool) {
+        //API : Ajout revois automatique à l'envoyeur
         require((keccak256(abi.encodePacked(_bundleState)) == keccak256("Unsalable") || keccak256(abi.encodePacked(_bundleState)) == keccak256("Certificed")), "Status Unknow");
         bool isFound = false;
         for(uint increment = 1; increment <= total_bundelId; increment++){
@@ -136,4 +139,6 @@ using SafeMath for uint256;
         require(isFound, "No match found for supplier and product found");
         return isFound;
     }
+
+    //API: fonction get
 }
