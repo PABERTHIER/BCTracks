@@ -28,7 +28,7 @@ using SafeMath for uint256;
     // Fetch Product
     mapping(uint => Product) public products;
 
-    uint total_bundelId;
+    uint public total_bundelId;
     uint increment_bundelId;
 
     event addedEvent ( uint indexed _bundleId);
