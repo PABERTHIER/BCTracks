@@ -1,6 +1,7 @@
 export interface D {
   bundleId: number
   bundle?: any
+  amountToBuy: number
 }
 
 export interface M {

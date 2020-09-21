@@ -7,6 +7,10 @@
         <div>
           <input v-model="bundleId" type="number" />
         </div>
+        <div v-t="'pages.index.buy.amountToBuy'" />
+        <div>
+          <input v-model="amountToBuy" type="number" />
+        </div>
       </div>
       <div v-if="hasBundleAvailable" class="bloc bloc-bundle">
         <div>
@@ -46,6 +50,7 @@ export default Vue.extend<D, M, C, P>({
     return {
       bundleId: 0,
       bundle: undefined,
+      amountToBuy: 0,
     }
   },
   computed: {
@@ -93,7 +98,42 @@ export default Vue.extend<D, M, C, P>({
         this.$notify(errorMsg, e, 'error', 5_000)
       }
     },
-    buyBundle() {},
+    async buyBundle() {
+      try {
+        if (this.web3!.coinbase) {
+          await this.contractInstance().Buy_Bundle(
+            this.data.bundleId,
+            this.data.bundleNumber,
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const successMsg = this.$t(
+                  'pages.index.add.buy_success'
+                ) as string
+                this.$notify(successMsg, '', 'success', 5_000)
+                this.clear()
+                this.getContractInstance!()
+              }
+            }
+          )
+        }
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
+    },
+    clear() {
+      this.data.bundleId = 0
+      this.data.bundleNumber = 0
+      this.data.productName = ''
+      this.data.productNumber = 0
+    },
   },
 })
 </script>
