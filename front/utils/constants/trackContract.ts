@@ -1,5 +1,5 @@
-const address = '0xf30bc49296f2d9622aa8d332b85eb790fa7bbe2e'
-// Todo: mettre à jour adresse du contrat
+const address = '0xf9eaF96AA946EB757775f9AB39Bd89b15C9Fd41b'
+
 const ABI = [
   {
     anonymous: false,
@@ -39,7 +39,7 @@ const ABI = [
       {
         indexed: true,
         internalType: 'uint256',
-        name: '_bundleId',
+        name: '_singleId',
         type: 'uint256',
       },
       {
@@ -58,7 +58,7 @@ const ABI = [
       {
         indexed: true,
         internalType: 'uint256',
-        name: '_bundleId',
+        name: '_singleId',
         type: 'uint256',
       },
       {
@@ -77,7 +77,7 @@ const ABI = [
       {
         indexed: true,
         internalType: 'uint256',
-        name: '_bundleId',
+        name: '_singleId',
         type: 'uint256',
       },
       {
@@ -97,22 +97,9 @@ const ABI = [
         name: '_bundle_id',
         type: 'uint256',
       },
-    ],
-    name: 'Accepted_takeOver_Bundle',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'uint256',
-        name: '_bundle_id',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_bundles_nulber',
+        name: '_bundles_number',
         type: 'uint256',
       },
       {
@@ -135,7 +122,7 @@ const ABI = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'Id',
+        name: '_singleId',
         type: 'uint256',
       },
       {
@@ -152,17 +139,41 @@ const ABI = [
   {
     inputs: [
       {
+        internalType: 'address payable',
+        name: '_supplier',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: 'Id',
+        name: '_bundleId',
         type: 'uint256',
       },
       {
         internalType: 'string',
-        name: 'state0',
+        name: '_bundleState',
         type: 'string',
       },
     ],
-    name: 'Certify_Lots',
+    name: 'Change_BundleState',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_singleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'Del_Bundle',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -171,7 +182,20 @@ const ABI = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_bundle_id',
+        name: '_singleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'Delivery_takeOver_Bundle',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_singleId',
         type: 'uint256',
       },
       {
@@ -188,12 +212,25 @@ const ABI = [
   {
     inputs: [
       {
+        internalType: 'address payable',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
       },
     ],
-    name: 'products',
+    name: 'bundles',
     outputs: [
       {
         internalType: 'address payable',
@@ -236,6 +273,11 @@ const ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'sale_date',
+        type: 'uint256',
+      },
+      {
         internalType: 'string',
         name: 'state',
         type: 'string',
@@ -250,19 +292,18 @@ const ABI = [
     type: 'function',
   },
   {
-    inputs: [
+    inputs: [],
+    name: 'total_bundelId',
+    outputs: [
       {
-        internalType: 'address payable',
-        name: 'newOwner',
-        type: 'address',
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
 ]
-// Todo: mettre à jour abi du contrat
 
 export { address, ABI }

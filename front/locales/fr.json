@@ -25,10 +25,22 @@
                 "add_success": "Ajout du lot réalisé avec succès !"
             },
             "buy": {
-                "title": "Acheter un lot"
+                "title": "Acheter un lot",
+                "bundleId": "Id du lot",
+                "buy_bundle": "Acheter",
+                "name": "Nom:",
+                "status": "Status:",
+                "certification": "Certification:",
+                "no_bundle": "Lot non existant ou indisponible."
             },
             "certify": {
-                "title": "Certifier un Lot"
+                "title": "Certifier un Lot",
+                "bundleId": "Id du lot",
+                "certify_bundle": "Certifier",
+                "name": "Nom:",
+                "status": "Status:",
+                "certification": "Certification:",
+                "no_bundle": "Lot non existant ou indisponible."
             },
             "takeover": {
                 "title": "Prise en charge"

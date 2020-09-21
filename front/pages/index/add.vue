@@ -58,7 +58,6 @@ export default Vue.extend<D, M, C, P>({
     async addBundle() {
       try {
         if (this.web3!.coinbase) {
-          console.log(this.contractInstance())
           await this.contractInstance().Add_Bundle(
             this.data.bundleId,
             this.data.bundleNumber,
@@ -92,7 +91,6 @@ export default Vue.extend<D, M, C, P>({
 
 <style lang="scss" scoped>
 .child-page {
-  background-color: #fcfafa;
   .bloc {
     margin-bottom: 10px;
   }
