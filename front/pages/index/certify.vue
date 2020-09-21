@@ -15,11 +15,11 @@
         </div>
         <div>
           <span v-t="'pages.index.certify.status'" />
-          {{ bundle[8] }}
+          {{ bundle[9] }}
         </div>
         <div>
           <span v-t="'pages.index.certify.certification'" />
-          {{ bundle[9] }}
+          {{ bundle[10] }}
         </div>
       </div>
       <div v-else class="no-bundle">{{ noBundle }}</div>
@@ -53,9 +53,9 @@ export default Vue.extend<D, M, C, P>({
     hasBundleAvailable() {
       if (
         this.bundle &&
-        this.bundle.length === 10 &&
+        this.bundle.length === 11 &&
         this.bundle[6] !== '' &&
-        this.bundle[8] === 'Available'
+        this.bundle[9] === 'Available'
       ) {
         return true
       }
@@ -77,7 +77,7 @@ export default Vue.extend<D, M, C, P>({
   methods: {
     async getBundle() {
       try {
-        await this.contractInstance().products.call(
+        await this.contractInstance().bundles.call(
           this.bundleId,
           (err, result) => {
             if (err) {
