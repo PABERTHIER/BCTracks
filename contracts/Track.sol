@@ -10,7 +10,7 @@ contract Track is Ownable {
 using SafeMath for uint256;
 
     // Model a Bundle
-    struct Product {
+    struct Bundle {
         address payable supplier_key;
         address payable owner_key;
         address payable delivery_key;
@@ -24,9 +24,9 @@ using SafeMath for uint256;
         string certstate;
     }
 
-    // Store Products
-    // Fetch Product
-    mapping(uint => Product) public products;
+    // Store Bundles
+    // Fetch Bundle
+    mapping(uint => Bundle) public bundles;
 
     uint public total_bundelId;
     uint increment_bundelId;
@@ -43,7 +43,7 @@ using SafeMath for uint256;
         string memory certstate = "Not Certified";
         address payable _none_delivery = address(0);
         address payable _supplier_key = msg.sender;
-        products[total_bundelId] = Product( _supplier_key,
+        bundles[total_bundelId] = Bundle( _supplier_key,
                                             _supplier_key,
                                             _none_delivery,
                                             increment_bundelId,
@@ -59,18 +59,18 @@ using SafeMath for uint256;
 
         bool isFound = false;
         for(uint increment = 0; increment < total_bundelId; increment++){
-            if(products[increment].id == _singleId){
-                require(    products[increment].supplier_key == msg.sender &&
-                            products[increment].owner_key == msg.sender &&
-                            keccak256(abi.encodePacked(products[increment].state)) != keccak256("Sent"));
+            if(bundles[increment].id == _singleId){
+                require(    bundles[increment].supplier_key == msg.sender &&
+                            bundles[increment].owner_key == msg.sender &&
+                            keccak256(abi.encodePacked(bundles[increment].state)) != keccak256("Sent"));
                 isFound = true;
             }
             if(isFound){
-                products[increment] = products[increment+1];
+                bundles[increment] = bundles[increment+1];
             }
         }
         if(isFound){
-            products[total_bundelId] = Product( address(0),
+            bundles[total_bundelId] = Bundle( address(0),
                                                 address(0),
                                                 address(0),
                                                 0,
@@ -91,54 +91,54 @@ using SafeMath for uint256;
 
         //Change status
         for(uint increment = 0; increment < total_bundelId; increment++){
-            if(products[increment].id == _singleId){
-                require(    _bundles_to_send <= products[increment].bundles_number &&
-                            keccak256(abi.encodePacked(products[increment].certstate)) != keccak256("Unsalable"));
-                if (_bundles_to_send == products[increment].bundles_number) {
-                    products[increment].state = "In Process";
-                    products[increment].owner_key = msg.sender;
-                    products[increment].sale_date = block.timestamp;
+            if(bundles[increment].id == _singleId){
+                require(    _bundles_to_send <= bundles[increment].bundles_number &&
+                            keccak256(abi.encodePacked(bundles[increment].certstate)) != keccak256("Unsalable"));
+                if (_bundles_to_send == bundles[increment].bundles_number) {
+                    bundles[increment].state = "In Process";
+                    bundles[increment].owner_key = msg.sender;
+                    bundles[increment].sale_date = block.timestamp;
                 }
                 else {
                     total_bundelId ++;
                     increment_bundelId ++;
                     string memory state = "In Process";
-                    products[total_bundelId] = Product( products[increment].supplier_key,
+                    bundles[total_bundelId] = Bundle( bundles[increment].supplier_key,
                                                         msg.sender,
-                                                        products[increment].delivery_key,
+                                                        bundles[increment].delivery_key,
                                                         increment_bundelId,
-                                                        products[increment].bundle_id,
+                                                        bundles[increment].bundle_id,
                                                         _bundles_to_send,
-                                                        products[increment].product_name,
-                                                        products[increment].product_number,
+                                                        bundles[increment].product_name,
+                                                        bundles[increment].product_number,
                                                         block.timestamp,
                                                         state,
-                                                        products[increment].certstate);
-                    products[increment].bundles_number = products[increment].bundles_number - _bundles_to_send;
+                                                        bundles[increment].certstate);
+                    bundles[increment].bundles_number = bundles[increment].bundles_number - _bundles_to_send;
                 }
             }
         }
 
         // trigger bought event
-        emit boughtEvent (_singleId, products[_singleId].owner_key);
+        emit boughtEvent (_singleId, bundles[_singleId].owner_key);
     }
 
     function Submit_takeOver_Bundle (uint _singleId, address payable _delivery_key) public {
-        // require a valid Product
+        // require a valid Bundle
         require(_singleId > 0 && _singleId <= increment_bundelId);
 
         //Add a delivery purpose
         for(uint increment = 0; increment < total_bundelId; increment++){
-            if(products[increment].id == _singleId){
-                require(keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("In Process") ||
-                        keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("Issued") ||
-                        keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("Product Recall"));
-                if(keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("Issued")){
-                    products[increment].delivery_key = address(0);
-                    products[increment].state = "Received";
+            if(bundles[increment].id == _singleId){
+                require(keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("In Process") ||
+                        keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Issued") ||
+                        keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Bundle Recall"));
+                if(keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Issued")){
+                    bundles[increment].delivery_key = address(0);
+                    bundles[increment].state = "Received";
                 }else{
                     require(_delivery_key != address(0));
-                    products[increment].delivery_key = _delivery_key;
+                    bundles[increment].delivery_key = _delivery_key;
                 }
             }
         }
@@ -148,20 +148,20 @@ using SafeMath for uint256;
     }
 
     function Delivery_takeOver_Bundle (uint _singleId) public {
-        // require a valid Product
+        // require a valid Bundle
         require(_singleId > 0 && _singleId <= increment_bundelId);
 
         //Add a delivery purpose
         for(uint increment = 0; increment < total_bundelId; increment++){
-            if(products[increment].id == _singleId){
-                require(msg.sender == products[increment].delivery_key &&
-                            (keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("In Process") ||
-                            keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("Sent")||
-                            keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("Product Recall")));
-                if(keccak256(abi.encodePacked(products[increment].state)) ==  keccak256("Sent")){
-                    products[increment].state = "Issued";
+            if(bundles[increment].id == _singleId){
+                require(msg.sender == bundles[increment].delivery_key &&
+                            (keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("In Process") ||
+                            keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Sent")||
+                            keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Bundle Recall")));
+                if(keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Sent")){
+                    bundles[increment].state = "Issued";
                 }else{
-                    products[increment].state = "Sent";
+                    bundles[increment].state = "Sent";
                 }
                 
             }
@@ -174,13 +174,13 @@ using SafeMath for uint256;
                     keccak256(abi.encodePacked(_bundleState)) == keccak256("Certificed")), "Status Unknow");
         bool isFound = false;
         for(uint increment = 1; increment <= total_bundelId; increment++){
-            if(products[increment].supplier_key == _supplier && products[increment].bundle_id == _bundleId){
+            if(bundles[increment].supplier_key == _supplier && bundles[increment].bundle_id == _bundleId){
                 isFound = true;
-                require(keccak256(abi.encodePacked(products[increment].certstate)) != keccak256("Unsalable"), "One product already unsalable for supplier selected");
-                products[increment].certstate = _bundleState;
+                require(keccak256(abi.encodePacked(bundles[increment].certstate)) != keccak256("Unsalable"), "One product already unsalable for supplier selected");
+                bundles[increment].certstate = _bundleState;
                 if(keccak256(abi.encodePacked(_bundleState)) == keccak256("Unsalable")){
-                    products[increment].owner_key = products[increment].supplier_key;
-                    products[increment].state = "Product Recall";
+                    bundles[increment].owner_key = bundles[increment].supplier_key;
+                    bundles[increment].state = "Bundle Recall";
                 }
             }
         }
