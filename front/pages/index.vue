@@ -35,6 +35,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
+import { formatDate } from '~/helpers/date.ts'
 import BCTracks from '~/components/BCTracks.vue'
 import { D, M, C, P } from '~/pages/index.types'
 
@@ -63,6 +64,7 @@ export default Vue.extend<D, M, C, P>({
     contract() {
       try {
         console.log(this.contractInstance())
+        console.log(formatDate(1600699752))
       } catch {}
     },
   },

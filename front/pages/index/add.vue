@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { D, M, C, P } from '~/pages/index/add.types'
 
 export default Vue.extend<D, M, C, P>({
@@ -55,6 +55,7 @@ export default Vue.extend<D, M, C, P>({
     ...mapState('tracks', ['web3', 'contractInstance']),
   },
   methods: {
+    ...mapActions('tracks', ['getContractInstance']),
     async addBundle() {
       try {
         if (this.web3!.coinbase) {
@@ -76,6 +77,8 @@ export default Vue.extend<D, M, C, P>({
                   'pages.index.add.add_success'
                 ) as string
                 this.$notify(successMsg, '', 'success', 5_000)
+                this.clear()
+                this.getContractInstance!()
               }
             }
           )
@@ -84,6 +87,12 @@ export default Vue.extend<D, M, C, P>({
         const errorMsg = this.$t('miscellaneous.error') as string
         this.$notify(errorMsg, e, 'error', 5_000)
       }
+    },
+    clear() {
+      this.data.bundleId = 0
+      this.data.bundleNumber = 0
+      this.data.productName = ''
+      this.data.productNumber = 0
     },
   },
 })

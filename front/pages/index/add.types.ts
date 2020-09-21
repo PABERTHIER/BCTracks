@@ -8,7 +8,9 @@ export interface D {
 }
 
 export interface M {
+  getContractInstance?: () => void
   addBundle: () => void
+  clear: () => void
 }
 
 export interface C {
