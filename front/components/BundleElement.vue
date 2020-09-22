@@ -65,7 +65,7 @@ export default Vue.extend<D, M, C, P>({
   components: {},
   props: {
     bundleId: {
-      type: Number,
+      type: [String, Number],
       required: true,
     },
     connection: {
@@ -74,7 +74,7 @@ export default Vue.extend<D, M, C, P>({
       default: '',
     },
     bundleData: {
-      type: Object,
+      type: Array,
       required: false,
       default: undefined,
     },

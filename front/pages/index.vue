@@ -18,6 +18,7 @@
           v-t="'pages.default.links.certify_bundle'"
           :to="'/certify'"
         />
+        <nuxt-link v-t="'pages.default.links.remove_bundle'" :to="'/remove'" />
         <nuxt-link v-t="'pages.default.links.takeover'" :to="'/takeover'" />
       </div>
       <div class="route-content">

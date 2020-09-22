@@ -12,6 +12,7 @@
                 "add_bundle": "Ajouter une entité",
                 "buy_bundle": "Acheter un lot",
                 "certify_bundle": "Certifier un lot",
+                "remove_bundle": "Supprimer un lot",
                 "takeover": "Prise en charge"
             }
         },
@@ -47,6 +48,14 @@
                 "no_bundle": "Lot non existant ou indisponible.",
                 "changing_state_in_process": "Changement d'état du lot en cours.",
                 "unsalable_confirm": "Êtes-vous sûr de vouloir rendre ce lot invendable ? (Cette action est irréversible)"
+            },
+            "remove" : {
+                "title": "Supprimer un lot",
+                "remove_confirm": "Êtes-vous sûr de vouloir supprimer ce lot ? (Cette action est irréversible)",
+                "remove_success": "Suppression du lot réalisée avec succès !",
+                "no_bundle": "Lot non existant ou indisponible.",
+                "remove_bundle": "Supprimer",
+                "bundleId": "Id du lot"
             },
             "takeover": {
                 "title": "Prise en charge"

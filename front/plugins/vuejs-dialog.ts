@@ -46,8 +46,7 @@ export function getDialogDefaultOptions(this: Vue): DialogOptions {
 
 const confirmPlugin: Plugin = (context, inject) => {
   inject('confirm', function(this: Vue, message: string | undefined) {
-    const title =
-      message || (this.$t('miscellaneous.confirmDefaultAction') as string)
+    const title = message
     const defaultOptions = getDialogDefaultOptions.call(this)
     return (Vue as any).dialog.confirm(title, defaultOptions)
   })

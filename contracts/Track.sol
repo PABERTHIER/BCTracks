@@ -184,7 +184,7 @@ using SafeMath for uint256;
                 }
             }
         }
-        require(!isFound, "No match found for supplier and product found");
+        require(isFound, "No match found for supplier and product found");
         return isFound;
     }
 }
