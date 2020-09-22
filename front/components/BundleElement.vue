@@ -2,15 +2,15 @@
   <div class="bundle-element">
     <div v-if="bundle" class="bloc bloc-bundle">
       <div>
-        <span v-t="'pages.components.LastElements.name'" />
+        <span v-t="'components.lastElements.name'" />
         {{ bundle[6] }}
       </div>
       <div>
-        <span v-t="'pages.components.LastElements.status'" />
+        <span v-t="'components.lastElements.status'" />
         {{ bundle[9] }}
       </div>
       <div>
-        <span v-t="'pages.components.LastElements.certification'" />
+        <span v-t="'components.lastElements.certification'" />
         {{ bundle[10] }}
       </div>
     </div>
@@ -20,13 +20,17 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import { D, M, C, P } from '~/pages/index/BundleElement.types'
+import { D, M, C, P } from '~/components/BundleElement.types'
 
 export default Vue.extend<D, M, C, P>({
   components: {},
   props: {
     bundleId: {
       type: Number,
+      required: true,
+    },
+    connection: {
+      type: String,
       required: true,
     },
   },
@@ -38,8 +42,12 @@ export default Vue.extend<D, M, C, P>({
   computed: {
     ...mapState('tracks', ['contractInstance']),
   },
-  mounted() {
-    this.getBundle()
+  watch: {
+    connection(newVal: string) {
+      if (newVal === 'connected') {
+        this.getBundle()
+      }
+    },
   },
   methods: {
     async getBundle() {
@@ -66,7 +74,11 @@ export default Vue.extend<D, M, C, P>({
 
 <style lang="scss" scoped>
 .bundle-element {
-  width: 100%;
-  height: 100%;
+  .bloc-bundle {
+    border: solid;
+    border-radius: 30px;
+    text-align: center;
+    width: 150px;
+  }
 }
 </style>

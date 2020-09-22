@@ -1,6 +1,12 @@
 <template>
-  <div class="last-elements">
-    <BundleElement :bundle-id="2" />
+  <div v-if="totalBundle !== 0" class="last-elements">
+    <div v-for="element in numberOfElements" :key="element.id">
+      <BundleElement
+        :connection="connection"
+        :bundle-id="totalBundle - element"
+        class="element"
+      />
+    </div>
   </div>
 </template>
 
@@ -8,7 +14,7 @@
 import Vue from 'vue'
 import { mapState } from 'vuex'
 import BundleElement from '~/components/BundleElement.vue'
-import { D, M, C, P } from '~/pages/index/LastElements.types'
+import { D, M, C, P } from '~/components/LastElements.types'
 
 export default Vue.extend<D, M, C, P>({
   components: {
@@ -23,6 +29,10 @@ export default Vue.extend<D, M, C, P>({
       type: Number,
       required: true,
     },
+    connection: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -31,7 +41,6 @@ export default Vue.extend<D, M, C, P>({
     }
   },
   computed: {
-    // ...mapState('tracks', ['contractInstance']),
     hasBundleAvailable() {
       if (
         this.bundle &&
@@ -53,7 +62,10 @@ export default Vue.extend<D, M, C, P>({
 
 <style lang="scss" scoped>
 .last-elements {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  margin-top: 25px;
+  .element {
+    margin-right: 10px;
+  }
 }
 </style>

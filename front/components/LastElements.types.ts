@@ -3,17 +3,15 @@ export interface D {
   bundle?: any
 }
 
-export interface M {
-  getBundle: () => void
-  buyBundle: () => void
-}
+export interface M {}
 
 export interface C {
-  contractInstance?: any
   hasBundleAvailable: boolean
   noBundle: string
 }
 
 export interface P {
   numberOfElements: number
+  totalBundle: number
+  connection: string
 }

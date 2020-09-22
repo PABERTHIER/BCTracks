@@ -15,7 +15,11 @@
     </div>
     <div v-t="`pages.default.${connection.status}`" :class="connection.class" />
     <BCTracks v-if="web3 && connection.status === 'connected'" :data="web3" />
-    <LastElements :number-of-elements="5" :total-bundle="15" />
+    <LastElements
+      :connection="connection.status"
+      :number-of-elements="5"
+      :total-bundle="totalBundle"
+    />
     <div class="route">
       <div class="links">
         <nuxt-link v-t="'pages.default.links.add_bundle'" :to="'/add'" />
@@ -49,21 +53,29 @@ export default Vue.extend<D, M, C, P>({
   data() {
     return {
       totalBundle: 0,
+      isConnected: false,
     }
   },
   computed: {
     ...mapState('tracks', ['web3', 'contractInstance']),
     connection() {
       if (this.web3!.coinbase) {
+        this.getTotalBundle()
         return { status: 'connected', class: 'connected' }
       } else {
         return { status: 'disconnected', class: 'disconnected' }
       }
     },
   },
+  watch: {
+    async contractInstance(newVal) {
+      if (newVal) {
+        await this.getTotalBundle()
+      }
+    },
+  },
   mounted() {
     this.getContractInstance!()
-    // this.getTotalBundle()
   },
   methods: {
     ...mapActions('tracks', ['getAccount', 'getContractInstance']),
@@ -73,21 +85,21 @@ export default Vue.extend<D, M, C, P>({
         console.log(formatDate(1600699752))
       } catch {}
     },
-    // async getTotalBundle() {
-    //   try {
-    //     await this.contractInstance().total_bundelId.call((err, result) => {
-    //       if (err) {
-    //         const errorMsg = this.$t('miscellaneous.error') as string
-    //         this.$notify(errorMsg, err.message, 'error', 5_000)
-    //       } else {
-    //         this.totalBundle = result
-    //       }
-    //     })
-    //   } catch (e) {
-    //     const errorMsg = this.$t('miscellaneous.error') as string
-    //     this.$notify(errorMsg, e, 'error', 5_000)
-    //   }
-    // },
+    async getTotalBundle() {
+      try {
+        await this.contractInstance().total_bundelId.call((err, result) => {
+          if (err) {
+            const errorMsg = this.$t('miscellaneous.error') as string
+            this.$notify(errorMsg, err.message, 'error', 5_000)
+          } else {
+            this.totalBundle = result.c[0]
+          }
+        })
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
+    },
   },
   head() {
     return {

@@ -1,7 +1,16 @@
-export interface D {}
+export interface D {
+  bundle: any
+}
 
-export interface M {}
+export interface M {
+  getBundle: () => void
+}
 
-export interface C {}
+export interface C {
+  contractInstance?: any
+}
 
-export interface P {}
+export interface P {
+  bundleId: number
+  connection: string
+}

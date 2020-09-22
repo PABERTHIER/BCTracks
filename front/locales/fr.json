@@ -53,6 +53,11 @@
             "network": "Network:",
             "account": "Account:",
             "balance": "Balance:"
+        },
+        "lastElements": {
+            "name": "Nom:",
+            "status": "Status:",
+            "certification": "État:"
         }
     },
     "miscellaneous": {
