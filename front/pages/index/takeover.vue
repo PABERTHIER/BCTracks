@@ -89,6 +89,7 @@ export default Vue.extend<D, M, C, P>({
         this.bundle &&
         this.bundle.length === 11 &&
         this.bundle[6] !== '' &&
+        this.bundle[2] === this.web3!.coinbase &&
         (this.bundle[9] === 'In Process' ||
           this.bundle[9] === 'Sent' ||
           this.bundle[9] === 'Bundle Recall') &&
@@ -154,6 +155,9 @@ export default Vue.extend<D, M, C, P>({
               }
             }
           )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
         }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
@@ -182,6 +186,9 @@ export default Vue.extend<D, M, C, P>({
               }
             }
           )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
         }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
@@ -213,9 +220,24 @@ export default Vue.extend<D, M, C, P>({
       font-size: 18px;
     }
   }
-  .submit-button,
   .delivery-button {
     width: 150px;
+    height: 35px;
+    background-color: $grey;
+    color: $white;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    opacity: 0.5;
+    cursor: not-allowed;
+    &.clickable {
+      background-color: $red;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+  .submit-button {
+    width: 200px;
     height: 35px;
     background-color: $grey;
     color: $white;

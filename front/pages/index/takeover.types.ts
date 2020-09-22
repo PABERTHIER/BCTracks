@@ -1,13 +1,14 @@
 export interface D {
   bundleId: number
-  bundle: undefined
+  bundle: any
   addressDelivery: string
 }
 
 export interface M {
   getContractInstance?: () => void
-  submitBundle: () => void
-  deliveryBundle: () => void
+  submitTakeover: () => void
+  deliveryTakeover: () => void
+  getBundle: () => void
 }
 
 export interface C {
