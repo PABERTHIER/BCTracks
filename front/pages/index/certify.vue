@@ -144,6 +144,12 @@ export default Vue.extend<D, M, C, P>({
     async setBundleUnsalable() {
       try {
         if (this.web3!.coinbase) {
+          const confirmText = this.$t('pages.index.certify.unsalable_confirm')
+          try {
+            await this.$confirm(confirmText)
+          } catch {
+            return
+          }
           await this.contractInstance().Change_BundleState(
             this.bundle[0],
             this.bundle[4].c[0],
