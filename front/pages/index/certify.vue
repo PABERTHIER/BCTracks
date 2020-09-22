@@ -8,20 +8,11 @@
           <input v-model="bundleId" type="number" />
         </div>
       </div>
-      <div v-if="hasBundleAvailable" class="bloc bloc-bundle">
-        <div>
-          <span v-t="'pages.index.certify.name'" />
-          {{ bundle[6] }}
-        </div>
-        <div>
-          <span v-t="'pages.index.certify.status'" />
-          {{ bundle[9] }}
-        </div>
-        <div>
-          <span v-t="'pages.index.certify.certification'" />
-          {{ bundle[10] }}
-        </div>
-      </div>
+      <BundleElement
+        v-if="hasBundleAvailable"
+        :bundle-id="bundleId"
+        :bundle-data="bundle"
+      />
       <div v-else class="no-bundle">{{ noBundle }}</div>
     </div>
     <button
@@ -44,10 +35,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState } from 'vuex'
+import BundleElement from '~/components/BundleElement.vue'
 import { D, M, C, P } from '~/pages/index/certify.types'
 
 export default Vue.extend<D, M, C, P>({
-  components: {},
+  components: {
+    BundleElement,
+  },
   props: {},
   data() {
     return {
@@ -117,26 +111,31 @@ export default Vue.extend<D, M, C, P>({
     },
     async setBundleCertified() {
       try {
-        await this.contractInstance().Change_BundleState(
-          this.bundle[0],
-          this.bundle[4].c[0],
-          'Certified',
-          {
-            gas: 300000,
-            from: this.web3!.coinbase,
-          },
-          (err, result) => {
-            if (err) {
-              const errorMsg = this.$t('miscellaneous.error') as string
-              this.$notify(errorMsg, err.message, 'error', 5_000)
-            } else {
-              const msg = this.$t(
-                'pages.index.certify.changing_state_in_process'
-              ) as string
-              this.$notify(msg, '', 'info', 2_000)
+        if (this.web3!.coinbase) {
+          await this.contractInstance().Change_BundleState(
+            this.bundle[0],
+            this.bundle[4].c[0],
+            'Certified',
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const msg = this.$t(
+                  'pages.index.certify.changing_state_in_process'
+                ) as string
+                this.$notify(msg, '', 'info', 2_000)
+              }
             }
-          }
-        )
+          )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
+        }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
         this.$notify(errorMsg, e, 'error', 5_000)
@@ -144,26 +143,37 @@ export default Vue.extend<D, M, C, P>({
     },
     async setBundleUnsalable() {
       try {
-        await this.contractInstance().Change_BundleState(
-          this.bundle[0],
-          this.bundle[4].c[0],
-          'Unsalable',
-          {
-            gas: 300000,
-            from: this.web3!.coinbase,
-          },
-          (err, result) => {
-            if (err) {
-              const errorMsg = this.$t('miscellaneous.error') as string
-              this.$notify(errorMsg, err.message, 'error', 5_000)
-            } else {
-              const msg = this.$t(
-                'pages.index.certify.changing_state_in_process'
-              ) as string
-              this.$notify(msg, '', 'info', 2_000)
-            }
+        if (this.web3!.coinbase) {
+          const confirmText = this.$t('pages.index.certify.unsalable_confirm')
+          try {
+            await this.$confirm(confirmText)
+          } catch {
+            return
           }
-        )
+          await this.contractInstance().Change_BundleState(
+            this.bundle[0],
+            this.bundle[4].c[0],
+            'Unsalable',
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const msg = this.$t(
+                  'pages.index.certify.changing_state_in_process'
+                ) as string
+                this.$notify(msg, '', 'info', 2_000)
+              }
+            }
+          )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
+        }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
         this.$notify(errorMsg, e, 'error', 5_000)
@@ -178,9 +188,11 @@ export default Vue.extend<D, M, C, P>({
   .bloc-container {
     display: flex;
     margin-bottom: 15px;
+    height: 200px;
     .bloc {
       width: 25%;
       margin-bottom: 10px;
+      margin-right: 300px;
     }
     .bloc-bundle {
       border: solid;

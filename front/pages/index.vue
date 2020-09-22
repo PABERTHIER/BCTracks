@@ -1,20 +1,10 @@
 <template>
   <div class="page-container">
-    <div class="enable">
-      <button
-        v-if="connection.status === 'disconnected'"
-        v-t="'miscellaneous.enable_eth'"
-        class="enable-button"
-        @click="getAccount()"
-      />
-      <button
-        v-t="'miscellaneous.contract'"
-        class="enable-button"
-        @click="contract()"
-      />
-    </div>
     <div v-t="`pages.default.${connection.status}`" :class="connection.class" />
-    <BCTracks v-if="web3 && connection.status === 'connected'" :data="web3" />
+    <h1
+      v-if="connection.status === 'connected'"
+      v-t="'pages.default.last_elements'"
+    />
     <LastElements
       :connection="connection.status"
       :number-of-elements="5"
@@ -34,6 +24,20 @@
         <nuxt-child />
       </div>
     </div>
+    <button
+      v-t="'miscellaneous.contract'"
+      class="enable-button"
+      @click="contract()"
+    />
+    <div class="enable">
+      <button
+        v-if="connection.status === 'disconnected'"
+        v-t="'miscellaneous.enable_eth'"
+        class="enable-button"
+        @click="getAccount()"
+      />
+    </div>
+    <BCTracks v-if="web3 && connection.status === 'connected'" :data="web3" />
   </div>
 </template>
 

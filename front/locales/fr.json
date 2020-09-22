@@ -7,6 +7,7 @@
             "title": "BCTracks",
             "connected": "Connecté",
             "disconnected": "Non connecté",
+            "last_elements": "Affichage des 5 derniers éléments",
             "links": {
                 "add_bundle": "Ajouter une entité",
                 "buy_bundle": "Acheter un lot",
@@ -44,7 +45,8 @@
                 "status": "Status:",
                 "certification": "État:",
                 "no_bundle": "Lot non existant ou indisponible.",
-                "changing_state_in_process": "Changement d'état du lot en cours."
+                "changing_state_in_process": "Changement d'état du lot en cours.",
+                "unsalable_confirm": "Êtes-vous sûr de vouloir rendre ce lot invendable ? (Cette action est irréversible)"
             },
             "takeover": {
                 "title": "Prise en charge"
@@ -61,7 +63,10 @@
         "lastElements": {
             "name": "Nom:",
             "status": "Status:",
-            "certification": "État:"
+            "certification": "État:",
+            "date": "Date:",
+            "nb_products": "Nombre de produits:",
+            "nb_bundles": "Nombre de lot(s) restant(s):"
         }
     },
     "miscellaneous": {
@@ -70,6 +75,9 @@
         "success": "Succès",
         "info": "Info",
         "connected": "Connexion au compte Ethereum réussie !",
-        "contract": "Contrat"
+        "contract": "Contrat",
+        "sould_be_connected": "Vous devez vous connecter à votre compte Metamask !",
+        "cancel": "Retour",
+        "ok": "Valider"
     }
 }
