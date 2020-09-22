@@ -12,6 +12,7 @@ export interface M {
 export interface C {
   contractInstance?: any
   hasBundleAvailable: boolean
+  hasEnoughAmount: boolean
   noBundle: string
 }
 
