@@ -15,6 +15,11 @@
     </div>
     <div v-t="`pages.default.${connection.status}`" :class="connection.class" />
     <BCTracks v-if="web3 && connection.status === 'connected'" :data="web3" />
+    <LastElements
+      :connection="connection.status"
+      :number-of-elements="5"
+      :total-bundle="totalBundle"
+    />
     <div class="route">
       <div class="links">
         <nuxt-link v-t="'pages.default.links.add_bundle'" :to="'/add'" />
@@ -37,22 +42,35 @@ import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
 import { formatDate } from '~/helpers/date.ts'
 import BCTracks from '~/components/BCTracks.vue'
+import LastElements from '~/components/LastElements.vue'
 import { D, M, C, P } from '~/pages/index.types'
 
 export default Vue.extend<D, M, C, P>({
   components: {
     BCTracks,
+    LastElements,
   },
   data() {
-    return {}
+    return {
+      totalBundle: 0,
+      isConnected: false,
+    }
   },
   computed: {
     ...mapState('tracks', ['web3', 'contractInstance']),
     connection() {
       if (this.web3!.coinbase) {
+        this.getTotalBundle()
         return { status: 'connected', class: 'connected' }
       } else {
         return { status: 'disconnected', class: 'disconnected' }
+      }
+    },
+  },
+  watch: {
+    async contractInstance(newVal) {
+      if (newVal) {
+        await this.getTotalBundle()
       }
     },
   },
@@ -66,6 +84,21 @@ export default Vue.extend<D, M, C, P>({
         console.log(this.contractInstance())
         console.log(formatDate(1600699752))
       } catch {}
+    },
+    async getTotalBundle() {
+      try {
+        await this.contractInstance().total_bundleId.call((err, result) => {
+          if (err) {
+            const errorMsg = this.$t('miscellaneous.error') as string
+            this.$notify(errorMsg, err.message, 'error', 5_000)
+          } else {
+            this.totalBundle = result.c[0]
+          }
+        })
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
     },
   },
   head() {

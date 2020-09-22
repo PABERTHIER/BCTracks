@@ -1,9 +1,12 @@
-export interface D {}
+export interface D {
+  totalBundle: number
+}
 
 export interface M {
   getAccount?: () => void
   getContractInstance?: () => void
   contract: () => void
+  getTotalBundle: () => void
 }
 
 export interface C {
