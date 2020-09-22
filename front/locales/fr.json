@@ -7,6 +7,7 @@
             "title": "BCTracks",
             "connected": "Connecté",
             "disconnected": "Non connecté",
+            "last_elements": "Affichage des 5 derniers éléments",
             "links": {
                 "add_bundle": "Ajouter une entité",
                 "buy_bundle": "Acheter un lot",
@@ -61,7 +62,10 @@
         "lastElements": {
             "name": "Nom:",
             "status": "Status:",
-            "certification": "État:"
+            "certification": "État:",
+            "date": "Date:",
+            "nb_products": "Nombre de produits:",
+            "nb_bundles": "Nombre de lot(s) restant(s):"
         }
     },
     "miscellaneous": {

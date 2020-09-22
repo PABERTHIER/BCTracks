@@ -3,7 +3,7 @@
     <div v-for="element in numberOfElements" :key="element.id">
       <BundleElement
         :connection="connection"
-        :bundle-id="totalBundle - element"
+        :bundle-id="1 + totalBundle - element"
         class="element"
       />
     </div>

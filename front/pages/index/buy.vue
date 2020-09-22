@@ -12,20 +12,11 @@
           <input v-model="amountToBuy" type="number" />
         </div>
       </div>
-      <div v-if="hasBundleAvailable" class="bloc bloc-bundle">
-        <div>
-          <span v-t="'pages.index.buy.name'" />
-          {{ bundle[6] }}
-        </div>
-        <div>
-          <span v-t="'pages.index.buy.status'" />
-          {{ bundle[9] }}
-        </div>
-        <div>
-          <span v-t="'pages.index.buy.certification'" />
-          {{ bundle[10] }}
-        </div>
-      </div>
+      <BundleElement
+        v-if="hasBundleAvailable"
+        :bundle-id="bundleId"
+        :bundle-data="bundle"
+      />
       <div v-else class="no-bundle">{{ noBundle }}</div>
     </div>
     <button
@@ -41,10 +32,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
+import BundleElement from '~/components/BundleElement.vue'
 import { D, M, C, P } from '~/pages/index/buy.types'
 
 export default Vue.extend<D, M, C, P>({
-  components: {},
+  components: {
+    BundleElement,
+  },
   props: {},
   data() {
     return {
@@ -147,10 +141,12 @@ export default Vue.extend<D, M, C, P>({
 .child-page {
   .bloc-container {
     display: flex;
+    height: 200px;
     margin-bottom: 15px;
     .bloc {
       width: 25%;
       margin-bottom: 10px;
+      margin-right: 300px;
     }
     .bloc-bundle {
       border: solid;

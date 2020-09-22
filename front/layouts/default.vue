@@ -70,7 +70,7 @@ header {
   text-align: center;
   font-size: 25px;
   padding-top: 50px;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
   background-color: $background-color-second;
 }
 body {
