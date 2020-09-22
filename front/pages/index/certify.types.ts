@@ -20,6 +20,8 @@ export interface C {
   }
   contractInstance?: any
   hasBundleAvailable: boolean
+  isCertified: boolean
+  isUnsalable: boolean
   noBundle: string
 }
 

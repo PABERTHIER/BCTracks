@@ -26,17 +26,16 @@
     </div>
     <button
       v-t="'pages.index.certify.certify_bundle'"
-      :disabled="!hasBundleAvailable"
+      :disabled="!hasBundleAvailable || isCertified || isUnsalable"
       class="certify-button"
-      :class="{ clickable: hasBundleAvailable }"
+      :class="{ clickable: hasBundleAvailable && !isCertified && !isUnsalable }"
       @click="setBundleCertified()"
     />
-    <!-- Todo: désactiver button si certifié, tout désactivé si unsalable  -->
     <button
       v-t="'pages.index.certify.unsable_bundle'"
-      :disabled="!hasBundleAvailable"
+      :disabled="!hasBundleAvailable || isUnsalable"
       class="unsalable-button"
-      :class="{ clickable: hasBundleAvailable }"
+      :class="{ clickable: hasBundleAvailable && !isUnsalable }"
       @click="setBundleUnsalable()"
     />
   </div>
@@ -60,6 +59,26 @@ export default Vue.extend<D, M, C, P>({
     ...mapState('tracks', ['web3', 'contractInstance']),
     hasBundleAvailable() {
       if (this.bundle && this.bundle.length === 11 && this.bundle[6] !== '') {
+        return true
+      }
+      return false
+    },
+    isCertified() {
+      if (
+        this.bundle &&
+        this.bundle.length === 11 &&
+        this.bundle[10] === 'Certified'
+      ) {
+        return true
+      }
+      return false
+    },
+    isUnsalable() {
+      if (
+        this.bundle &&
+        this.bundle.length === 11 &&
+        this.bundle[10] === 'Unsalable'
+      ) {
         return true
       }
       return false
@@ -100,8 +119,8 @@ export default Vue.extend<D, M, C, P>({
       try {
         await this.contractInstance().Change_BundleState(
           this.bundle[0],
-          this.bundleId,
-          'Certificed',
+          this.bundle[4].c[0],
+          'Certified',
           {
             gas: 300000,
             from: this.web3!.coinbase,
@@ -127,7 +146,7 @@ export default Vue.extend<D, M, C, P>({
       try {
         await this.contractInstance().Change_BundleState(
           this.bundle[0],
-          this.bundleId,
+          this.bundle[4].c[0],
           'Unsalable',
           {
             gas: 300000,
