@@ -58,7 +58,8 @@
                 "status": "Status:",
                 "certification": "Certification:",
                 "no_bundle": "Lot non existant ou indisponible.",
-                "submit_success": "Ajout de votre livreur réalisé avec succès !"
+                "submit_success": "Ajout de votre livreur réalisé avec succès !",
+                "delivery_success":"Prise en charge réalisé avec succès !"
             }
         }
     },

@@ -1,5 +1,6 @@
 export interface D {
   bundleId: number
+  bundle: undefined
   addressDelivery: string
 }
 
@@ -19,6 +20,10 @@ export interface C {
     error: any
   }
   contractInstance?: any
+  noBundle: string
+  hasBundleAvailable: boolean
+  hasBundleSubmit: boolean
+  hasBundleDelivery: boolean
 }
 
 export interface P {}
