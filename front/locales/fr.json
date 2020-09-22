@@ -7,8 +7,9 @@
             "title": "BCTracks",
             "connected": "Connecté",
             "disconnected": "Non connecté",
+            "last_elements": "Affichage des 5 derniers éléments",
             "links": {
-                "add_bundle": "Ajouter un lot",
+                "add_bundle": "Ajouter une entité",
                 "buy_bundle": "Acheter un lot",
                 "certify_bundle": "Certifier un lot",
                 "takeover": "Prise en charge"
@@ -16,8 +17,8 @@
         },
         "index": {
             "add": {
-                "title": "Ajouter un lot",
-                "add_bundle": "Ajouter un lot",
+                "title": "Ajouter une entité",
+                "add_bundle": "Ajouter une entité",
                 "bundleId": "Id du lot",
                 "bundleNumber": "Nombre de lots",
                 "productName": "Nom du produit",
@@ -27,20 +28,25 @@
             "buy": {
                 "title": "Acheter un lot",
                 "bundleId": "Id du lot",
+                "amountToBuy": "Nombre à acheter",
                 "buy_bundle": "Acheter",
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "Certification:",
-                "no_bundle": "Lot non existant ou indisponible."
+                "no_bundle": "Lot non existant ou indisponible.",
+                "buy_success": "Achat du lot réalisé avec succès !"
             },
             "certify": {
                 "title": "Certifier un Lot",
                 "bundleId": "Id du lot",
                 "certify_bundle": "Certifier",
+                "unsable_bundle": "Lot invendable",
                 "name": "Nom:",
                 "status": "Status:",
-                "certification": "Certification:",
-                "no_bundle": "Lot non existant ou indisponible."
+                "certification": "État:",
+                "no_bundle": "Lot non existant ou indisponible.",
+                "changing_state_in_process": "Changement d'état du lot en cours.",
+                "unsalable_confirm": "Êtes-vous sûr de vouloir rendre ce lot invendable ? (Cette action est irréversible)"
             },
             "takeover": {
                 "title": "Prise en charge",
@@ -62,6 +68,14 @@
             "network": "Network:",
             "account": "Account:",
             "balance": "Balance:"
+        },
+        "lastElements": {
+            "name": "Nom:",
+            "status": "Status:",
+            "certification": "État:",
+            "date": "Date:",
+            "nb_products": "Nombre de produits:",
+            "nb_bundles": "Nombre de lot(s) restant(s):"
         }
     },
     "miscellaneous": {
@@ -70,6 +84,9 @@
         "success": "Succès",
         "info": "Info",
         "connected": "Connexion au compte Ethereum réussie !",
-        "contract": "Contrat"
+        "contract": "Contrat",
+        "sould_be_connected": "Vous devez vous connecter à votre compte Metamask !",
+        "cancel": "Retour",
+        "ok": "Valider"
     }
 }

@@ -7,28 +7,23 @@
         <div>
           <input v-model="bundleId" type="number" />
         </div>
-      </div>
-      <div v-if="hasBundleAvailable" class="bloc bloc-bundle">
+        <div v-t="'pages.index.buy.amountToBuy'" />
         <div>
-          <span v-t="'pages.index.buy.name'" />
-          {{ bundle[6] }}
-        </div>
-        <div>
-          <span v-t="'pages.index.buy.status'" />
-          {{ bundle[9] }}
-        </div>
-        <div>
-          <span v-t="'pages.index.buy.certification'" />
-          {{ bundle[10] }}
+          <input v-model="amountToBuy" type="number" />
         </div>
       </div>
+      <BundleElement
+        v-if="hasBundleAvailable"
+        :bundle-id="bundleId"
+        :bundle-data="bundle"
+      />
       <div v-else class="no-bundle">{{ noBundle }}</div>
     </div>
     <button
       v-t="'pages.index.buy.buy_bundle'"
-      :disabled="!hasBundleAvailable"
+      :disabled="!hasBundleAvailable || !hasEnoughAmount"
       class="buy-button"
-      :class="{ clickable: hasBundleAvailable }"
+      :class="{ clickable: hasBundleAvailable && hasEnoughAmount }"
       @click="buyBundle()"
     />
   </div>
@@ -36,26 +31,41 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import BundleElement from '~/components/BundleElement.vue'
 import { D, M, C, P } from '~/pages/index/buy.types'
 
 export default Vue.extend<D, M, C, P>({
-  components: {},
+  components: {
+    BundleElement,
+  },
   props: {},
   data() {
     return {
       bundleId: 0,
       bundle: undefined,
+      amountToBuy: 0,
     }
   },
   computed: {
-    ...mapState('tracks', ['contractInstance']),
+    ...mapState('tracks', ['web3', 'contractInstance']),
     hasBundleAvailable() {
       if (
         this.bundle &&
         this.bundle.length === 11 &&
         this.bundle[6] !== '' &&
         this.bundle[9] === 'Available'
+      ) {
+        return true
+      }
+      return false
+    },
+    hasEnoughAmount() {
+      if (
+        this.bundle &&
+        this.bundle.length === 11 &&
+        this.bundle[5].c[0] >= this.amountToBuy &&
+        this.amountToBuy > 0
       ) {
         return true
       }
@@ -75,6 +85,7 @@ export default Vue.extend<D, M, C, P>({
     },
   },
   methods: {
+    ...mapActions('tracks', ['getContractInstance']),
     async getBundle() {
       try {
         await this.contractInstance().bundles.call(
@@ -93,7 +104,38 @@ export default Vue.extend<D, M, C, P>({
         this.$notify(errorMsg, e, 'error', 5_000)
       }
     },
-    buyBundle() {},
+    async buyBundle() {
+      try {
+        if (this.web3!.coinbase) {
+          await this.contractInstance().Buy_Bundle(
+            this.bundleId,
+            this.amountToBuy,
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const successMsg = this.$t(
+                  'pages.index.buy.buy_success'
+                ) as string
+                this.$notify(successMsg, '', 'success', 5_000)
+                this.getContractInstance!()
+              }
+            }
+          )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
+        }
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
+    },
   },
 })
 </script>
@@ -102,10 +144,12 @@ export default Vue.extend<D, M, C, P>({
 .child-page {
   .bloc-container {
     display: flex;
+    height: 200px;
     margin-bottom: 15px;
     .bloc {
       width: 25%;
       margin-bottom: 10px;
+      margin-right: 300px;
     }
     .bloc-bundle {
       border: solid;
