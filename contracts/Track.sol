@@ -58,7 +58,7 @@ using SafeMath for uint256;
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
         bool isFound = false;
-        for(uint increment = 0; increment < total_bundleId; increment++){
+        for(uint increment = 0; increment <= total_bundleId; increment++){
             if(bundles[increment].id == _singleId){
                 require(    bundles[increment].supplier_key == msg.sender &&
                             bundles[increment].owner_key == msg.sender &&
@@ -128,7 +128,7 @@ using SafeMath for uint256;
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
         //Add a delivery purpose
-        for(uint increment = 0; increment < total_bundleId; increment++){
+        for(uint increment = 0; increment <= total_bundleId; increment++){
             if(bundles[increment].id == _singleId){
                 require(keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("In Process") ||
                         keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Issued") ||
@@ -152,7 +152,7 @@ using SafeMath for uint256;
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
         //Add a delivery purpose
-        for(uint increment = 0; increment < total_bundleId; increment++){
+        for(uint increment = 0; increment <= total_bundleId; increment++){
             if(bundles[increment].id == _singleId){
                 require(msg.sender == bundles[increment].delivery_key &&
                             (keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("In Process") ||
@@ -184,7 +184,7 @@ using SafeMath for uint256;
                 }
             }
         }
-        require(!isFound, "No match found for supplier and product found");
+        require(isFound, "No match found for supplier and product found");
         return isFound;
     }
 }
