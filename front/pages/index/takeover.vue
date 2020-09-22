@@ -91,7 +91,7 @@ export default Vue.extend<D, M, C, P>({
   },
   methods: {
     ...mapActions('tracks', ['getContractInstance']),
-    async submitBundle() {
+    async submitTakeover() {
       try {
         if (this.web3!.coinbase) {
           await this.contractInstance().Submit_takeOver_Bundle(
@@ -120,7 +120,7 @@ export default Vue.extend<D, M, C, P>({
         this.$notify(errorMsg, e, 'error', 5_000)
       }
     },
-    async DeliveryBundle() {
+    async deliveryTakeover() {
       try {
         if (this.web3!.coinbase) {
           await this.contractInstance().Submit_takeOver_Bundle(
@@ -153,4 +153,43 @@ export default Vue.extend<D, M, C, P>({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.child-page {
+  .bloc-container {
+    display: flex;
+    margin-bottom: 15px;
+    height: 200px;
+    .bloc {
+      width: 25%;
+      margin-bottom: 10px;
+      margin-right: 300px;
+    }
+    .bloc-bundle {
+      border: solid;
+      border-radius: 30px;
+      text-align: center;
+    }
+    .no-bundle {
+      align-self: center;
+      font-size: 18px;
+    }
+  }
+  .submit-button,
+  .delivery-button {
+    width: 150px;
+    height: 35px;
+    background-color: $grey;
+    color: $white;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    opacity: 0.5;
+    cursor: not-allowed;
+    &.clickable {
+      background-color: $red;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+}
+</style>
