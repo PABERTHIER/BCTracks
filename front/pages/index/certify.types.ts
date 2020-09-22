@@ -5,10 +5,19 @@ export interface D {
 
 export interface M {
   getBundle: () => void
-  certifyBundle: () => void
+  setBundleCertified: () => void
+  setBundleUnsalable: () => void
 }
 
 export interface C {
+  web3?: {
+    isInjected: boolean
+    web3Instance: any
+    networkId: number
+    coinbase: string
+    balance: number
+    error: any
+  }
   contractInstance?: any
   hasBundleAvailable: boolean
   noBundle: string

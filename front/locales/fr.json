@@ -8,7 +8,7 @@
             "connected": "Connecté",
             "disconnected": "Non connecté",
             "links": {
-                "add_bundle": "Ajouter un lot",
+                "add_bundle": "Ajouter une entité",
                 "buy_bundle": "Acheter un lot",
                 "certify_bundle": "Certifier un lot",
                 "takeover": "Prise en charge"
@@ -16,8 +16,8 @@
         },
         "index": {
             "add": {
-                "title": "Ajouter un lot",
-                "add_bundle": "Ajouter un lot",
+                "title": "Ajouter une entité",
+                "add_bundle": "Ajouter une entité",
                 "bundleId": "Id du lot",
                 "bundleNumber": "Nombre de lots",
                 "productName": "Nom du produit",
@@ -37,10 +37,12 @@
                 "title": "Certifier un Lot",
                 "bundleId": "Id du lot",
                 "certify_bundle": "Certifier",
+                "unsable_bundle": "Lot invendable",
                 "name": "Nom:",
                 "status": "Status:",
-                "certification": "Certification:",
-                "no_bundle": "Lot non existant ou indisponible."
+                "certification": "État:",
+                "no_bundle": "Lot non existant ou indisponible.",
+                "changing_state_in_process": "Changement d'état du lot en cours."
             },
             "takeover": {
                 "title": "Prise en charge"

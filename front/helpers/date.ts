@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 export function formatDate(value: any): string {
-  if (value === undefined) {
+  if (value === 0) {
     return '--/--/--'
   }
   return moment.unix(value).format('DD/MM/YYYY')
