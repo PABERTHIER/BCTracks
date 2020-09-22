@@ -90,7 +90,7 @@ using SafeMath for uint256;
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
         //Change status
-        for(uint increment = 0; increment < total_bundleId; increment++){
+        for(uint increment = 0; increment <= total_bundleId; increment++){
             if(bundles[increment].id == _singleId){
                 require(    _bundles_to_send <= bundles[increment].bundles_number &&
                             keccak256(abi.encodePacked(bundles[increment].certstate)) != keccak256("Unsalable"));
