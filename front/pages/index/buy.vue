@@ -7,6 +7,10 @@
         <div>
           <input v-model="bundleId" type="number" />
         </div>
+        <div v-t="'pages.index.buy.amountToBuy'" />
+        <div>
+          <input v-model="amountToBuy" type="number" />
+        </div>
       </div>
       <div v-if="hasBundleAvailable" class="bloc bloc-bundle">
         <div>
@@ -26,9 +30,9 @@
     </div>
     <button
       v-t="'pages.index.buy.buy_bundle'"
-      :disabled="!hasBundleAvailable"
+      :disabled="!hasBundleAvailable || !hasEnoughAmount"
       class="buy-button"
-      :class="{ clickable: hasBundleAvailable }"
+      :class="{ clickable: hasBundleAvailable && hasEnoughAmount }"
       @click="buyBundle()"
     />
   </div>
@@ -36,7 +40,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { D, M, C, P } from '~/pages/index/buy.types'
 
 export default Vue.extend<D, M, C, P>({
@@ -46,16 +50,28 @@ export default Vue.extend<D, M, C, P>({
     return {
       bundleId: 0,
       bundle: undefined,
+      amountToBuy: 0,
     }
   },
   computed: {
-    ...mapState('tracks', ['contractInstance']),
+    ...mapState('tracks', ['web3', 'contractInstance']),
     hasBundleAvailable() {
       if (
         this.bundle &&
         this.bundle.length === 11 &&
         this.bundle[6] !== '' &&
         this.bundle[9] === 'Available'
+      ) {
+        return true
+      }
+      return false
+    },
+    hasEnoughAmount() {
+      if (
+        this.bundle &&
+        this.bundle.length === 11 &&
+        this.bundle[5].c[0] >= this.amountToBuy &&
+        this.amountToBuy > 0
       ) {
         return true
       }
@@ -75,6 +91,7 @@ export default Vue.extend<D, M, C, P>({
     },
   },
   methods: {
+    ...mapActions('tracks', ['getContractInstance']),
     async getBundle() {
       try {
         await this.contractInstance().bundles.call(
@@ -93,7 +110,35 @@ export default Vue.extend<D, M, C, P>({
         this.$notify(errorMsg, e, 'error', 5_000)
       }
     },
-    buyBundle() {},
+    async buyBundle() {
+      try {
+        if (this.web3!.coinbase) {
+          await this.contractInstance().Buy_Bundle(
+            this.bundleId,
+            this.amountToBuy,
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const successMsg = this.$t(
+                  'pages.index.buy.buy_success'
+                ) as string
+                this.$notify(successMsg, '', 'success', 5_000)
+                this.getContractInstance!()
+              }
+            }
+          )
+        }
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
+    },
   },
 })
 </script>

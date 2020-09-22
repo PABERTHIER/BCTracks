@@ -1,6 +1,7 @@
 export interface D {
   bundleId: number
   bundle?: any
+  amountToBuy: number
 }
 
 export interface M {
@@ -11,6 +12,7 @@ export interface M {
 export interface C {
   contractInstance?: any
   hasBundleAvailable: boolean
+  hasEnoughAmount: boolean
   noBundle: string
 }
 

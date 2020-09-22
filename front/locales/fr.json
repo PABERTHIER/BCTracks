@@ -27,11 +27,13 @@
             "buy": {
                 "title": "Acheter un lot",
                 "bundleId": "Id du lot",
+                "amountToBuy": "Nombre à acheter",
                 "buy_bundle": "Acheter",
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "Certification:",
-                "no_bundle": "Lot non existant ou indisponible."
+                "no_bundle": "Lot non existant ou indisponible.",
+                "buy_success": "Achat du lot réalisé avec succès !"
             },
             "certify": {
                 "title": "Certifier un Lot",
