@@ -1,14 +1,10 @@
 export interface D {
-  bundleId: number
   bundle?: any
 }
 
 export interface M {}
 
-export interface C {
-  hasBundleAvailable: boolean
-  noBundle: string
-}
+export interface C {}
 
 export interface P {
   numberOfElements: number

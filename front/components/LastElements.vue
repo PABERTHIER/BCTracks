@@ -36,26 +36,10 @@ export default Vue.extend<D, M, C, P>({
   },
   data() {
     return {
-      bundleId: 0,
       bundle: undefined,
     }
   },
-  computed: {
-    hasBundleAvailable() {
-      if (
-        this.bundle &&
-        this.bundle.length === 11 &&
-        this.bundle[6] !== '' &&
-        this.bundle[9] === 'Available'
-      ) {
-        return true
-      }
-      return false
-    },
-    noBundle() {
-      return this.$t('pages.components.LastElements.no_bundle') as string
-    },
-  },
+  computed: {},
   methods: {},
 })
 </script>
