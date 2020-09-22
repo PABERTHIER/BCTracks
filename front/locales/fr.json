@@ -43,7 +43,16 @@
                 "no_bundle": "Lot non existant ou indisponible."
             },
             "takeover": {
-                "title": "Prise en charge"
+                "title": "Prise en charge",
+                "bundleId": "Id du lot",
+                "addressdelivery": "Adresse du livreur",
+                "delivery_takeover_bundle":"Accepter la livraison",
+                "submit_takeover_bundle":"Renseigner mon livreur",
+                "name": "Nom:",
+                "status": "Status:",
+                "certification": "Certification:",
+                "no_bundle": "Lot non existant ou indisponible.",
+                "submit_success": "Ajout du lot réalisé avec succès !"
             }
         }
     },

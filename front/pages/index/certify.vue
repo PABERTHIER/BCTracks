@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { D, M, C, P } from '~/pages/index/certify.types'
 
 export default Vue.extend<D, M, C, P>({
