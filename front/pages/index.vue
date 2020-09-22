@@ -87,7 +87,7 @@ export default Vue.extend<D, M, C, P>({
     },
     async getTotalBundle() {
       try {
-        await this.contractInstance().total_bundelId.call((err, result) => {
+        await this.contractInstance().total_bundleId.call((err, result) => {
           if (err) {
             const errorMsg = this.$t('miscellaneous.error') as string
             this.$notify(errorMsg, err.message, 'error', 5_000)
