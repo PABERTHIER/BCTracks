@@ -111,26 +111,31 @@ export default Vue.extend<D, M, C, P>({
     },
     async setBundleCertified() {
       try {
-        await this.contractInstance().Change_BundleState(
-          this.bundle[0],
-          this.bundle[4].c[0],
-          'Certified',
-          {
-            gas: 300000,
-            from: this.web3!.coinbase,
-          },
-          (err, result) => {
-            if (err) {
-              const errorMsg = this.$t('miscellaneous.error') as string
-              this.$notify(errorMsg, err.message, 'error', 5_000)
-            } else {
-              const msg = this.$t(
-                'pages.index.certify.changing_state_in_process'
-              ) as string
-              this.$notify(msg, '', 'info', 2_000)
+        if (this.web3!.coinbase) {
+          await this.contractInstance().Change_BundleState(
+            this.bundle[0],
+            this.bundle[4].c[0],
+            'Certified',
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const msg = this.$t(
+                  'pages.index.certify.changing_state_in_process'
+                ) as string
+                this.$notify(msg, '', 'info', 2_000)
+              }
             }
-          }
-        )
+          )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
+        }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
         this.$notify(errorMsg, e, 'error', 5_000)
@@ -138,26 +143,31 @@ export default Vue.extend<D, M, C, P>({
     },
     async setBundleUnsalable() {
       try {
-        await this.contractInstance().Change_BundleState(
-          this.bundle[0],
-          this.bundle[4].c[0],
-          'Unsalable',
-          {
-            gas: 300000,
-            from: this.web3!.coinbase,
-          },
-          (err, result) => {
-            if (err) {
-              const errorMsg = this.$t('miscellaneous.error') as string
-              this.$notify(errorMsg, err.message, 'error', 5_000)
-            } else {
-              const msg = this.$t(
-                'pages.index.certify.changing_state_in_process'
-              ) as string
-              this.$notify(msg, '', 'info', 2_000)
+        if (this.web3!.coinbase) {
+          await this.contractInstance().Change_BundleState(
+            this.bundle[0],
+            this.bundle[4].c[0],
+            'Unsalable',
+            {
+              gas: 300000,
+              from: this.web3!.coinbase,
+            },
+            (err, result) => {
+              if (err) {
+                const errorMsg = this.$t('miscellaneous.error') as string
+                this.$notify(errorMsg, err.message, 'error', 5_000)
+              } else {
+                const msg = this.$t(
+                  'pages.index.certify.changing_state_in_process'
+                ) as string
+                this.$notify(msg, '', 'info', 2_000)
+              }
             }
-          }
-        )
+          )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
+        }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
         this.$notify(errorMsg, e, 'error', 5_000)

@@ -127,6 +127,9 @@ export default Vue.extend<D, M, C, P>({
               }
             }
           )
+        } else {
+          const msg = this.$t('miscellaneous.sould_be_connected') as string
+          this.$notify(msg, '', 'info', 5_000)
         }
       } catch (e) {
         const errorMsg = this.$t('miscellaneous.error') as string
