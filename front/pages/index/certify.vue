@@ -26,10 +26,17 @@
     </div>
     <button
       v-t="'pages.index.certify.certify_bundle'"
-      :disabled="!hasBundleAvailable"
+      :disabled="!hasBundleAvailable || isCertified || isUnsalable"
       class="certify-button"
-      :class="{ clickable: hasBundleAvailable }"
-      @click="certifyBundle()"
+      :class="{ clickable: hasBundleAvailable && !isCertified && !isUnsalable }"
+      @click="setBundleCertified()"
+    />
+    <button
+      v-t="'pages.index.certify.unsable_bundle'"
+      :disabled="!hasBundleAvailable || isUnsalable"
+      class="unsalable-button"
+      :class="{ clickable: hasBundleAvailable && !isUnsalable }"
+      @click="setBundleUnsalable()"
     />
   </div>
 </template>
@@ -49,13 +56,28 @@ export default Vue.extend<D, M, C, P>({
     }
   },
   computed: {
-    ...mapState('tracks', ['contractInstance']),
+    ...mapState('tracks', ['web3', 'contractInstance']),
     hasBundleAvailable() {
+      if (this.bundle && this.bundle.length === 11 && this.bundle[6] !== '') {
+        return true
+      }
+      return false
+    },
+    isCertified() {
       if (
         this.bundle &&
         this.bundle.length === 11 &&
-        this.bundle[6] !== '' &&
-        this.bundle[9] === 'Available'
+        this.bundle[10] === 'Certified'
+      ) {
+        return true
+      }
+      return false
+    },
+    isUnsalable() {
+      if (
+        this.bundle &&
+        this.bundle.length === 11 &&
+        this.bundle[10] === 'Unsalable'
       ) {
         return true
       }
@@ -93,7 +115,60 @@ export default Vue.extend<D, M, C, P>({
         this.$notify(errorMsg, e, 'error', 5_000)
       }
     },
-    certifyBundle() {},
+    async setBundleCertified() {
+      try {
+        await this.contractInstance().Change_BundleState(
+          this.bundle[0],
+          this.bundle[4].c[0],
+          'Certified',
+          {
+            gas: 300000,
+            from: this.web3!.coinbase,
+          },
+          (err, result) => {
+            if (err) {
+              const errorMsg = this.$t('miscellaneous.error') as string
+              this.$notify(errorMsg, err.message, 'error', 5_000)
+            } else {
+              const msg = this.$t(
+                'pages.index.certify.changing_state_in_process'
+              ) as string
+              this.$notify(msg, '', 'info', 2_000)
+            }
+          }
+        )
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
+    },
+    async setBundleUnsalable() {
+      try {
+        await this.contractInstance().Change_BundleState(
+          this.bundle[0],
+          this.bundle[4].c[0],
+          'Unsalable',
+          {
+            gas: 300000,
+            from: this.web3!.coinbase,
+          },
+          (err, result) => {
+            if (err) {
+              const errorMsg = this.$t('miscellaneous.error') as string
+              this.$notify(errorMsg, err.message, 'error', 5_000)
+            } else {
+              const msg = this.$t(
+                'pages.index.certify.changing_state_in_process'
+              ) as string
+              this.$notify(msg, '', 'info', 2_000)
+            }
+          }
+        )
+      } catch (e) {
+        const errorMsg = this.$t('miscellaneous.error') as string
+        this.$notify(errorMsg, e, 'error', 5_000)
+      }
+    },
   },
 })
 </script>
@@ -117,7 +192,8 @@ export default Vue.extend<D, M, C, P>({
       font-size: 18px;
     }
   }
-  .certify-button {
+  .certify-button,
+  .unsalable-button {
     width: 150px;
     height: 35px;
     background-color: $grey;
