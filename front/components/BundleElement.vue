@@ -1,6 +1,6 @@
 <template>
   <div class="bundle-element">
-    <div v-if="bundle" class="bloc bloc-bundle">
+    <div v-if="bundle && bundle[6] !== ''" class="bloc-bundle">
       <div>
         <span v-t="'components.lastElements.name'" />
         {{ bundle[6] }}
