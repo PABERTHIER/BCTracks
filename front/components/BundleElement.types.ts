@@ -15,4 +15,5 @@ export interface P {
   bundleId: number | string
   connection: string
   bundleData?: any
+  isReloading: boolean
 }

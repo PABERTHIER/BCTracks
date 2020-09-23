@@ -1,5 +1,7 @@
 export interface D {
   totalBundle: number
+  isConnected: boolean
+  isReloading: boolean
 }
 
 export interface M {
@@ -7,6 +9,8 @@ export interface M {
   getContractInstance?: () => void
   contract: () => void
   getTotalBundle: () => void
+  reload: () => void
+  reloaded: () => void
 }
 
 export interface C {

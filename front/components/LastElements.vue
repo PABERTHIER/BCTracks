@@ -4,7 +4,9 @@
       <BundleElement
         :connection="connection"
         :bundle-id="1 + totalBundle - element"
+        :is-reloading="isReloading"
         class="element"
+        @reloaded="reloaded"
       />
     </div>
   </div>
@@ -33,14 +35,29 @@ export default Vue.extend<D, M, C, P>({
       type: String,
       required: true,
     },
+    isReloading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
       bundle: undefined,
     }
   },
-  computed: {},
-  methods: {},
+  computed: {
+    totalElement() {
+      return 1 + this.totalBundle - this.numberOfElements
+    },
+  },
+  methods: {
+    reloaded(bundleId: number) {
+      if (bundleId === this.totalElement) {
+        this.$emit('reloaded')
+      }
+    },
+  },
 })
 </script>
 
