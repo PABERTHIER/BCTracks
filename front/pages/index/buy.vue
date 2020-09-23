@@ -108,7 +108,7 @@ export default Vue.extend<D, M, C, P>({
       try {
         if (this.web3!.coinbase) {
           await this.contractInstance().Buy_Bundle(
-            this.bundleId,
+            this.bundle[3].c[0],
             this.amountToBuy,
             {
               gas: 300000,

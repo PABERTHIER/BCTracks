@@ -136,7 +136,7 @@ export default Vue.extend<D, M, C, P>({
       try {
         if (this.web3!.coinbase) {
           await this.contractInstance().Submit_takeOver_Bundle(
-            this.bundleId,
+            this.bundle[3].c[0],
             this.addressDelivery,
             {
               gas: 300000,
@@ -168,7 +168,7 @@ export default Vue.extend<D, M, C, P>({
       try {
         if (this.web3!.coinbase) {
           await this.contractInstance().Delivery_takeOver_Bundle(
-            this.bundleId,
+            this.bundle[3].c[0],
             {
               gas: 300000,
               from: this.web3!.coinbase,
