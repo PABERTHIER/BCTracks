@@ -76,7 +76,7 @@ export default Vue.extend<D, M, C, P>({
                 const successMsg = this.$t(
                   'pages.index.add.add_success'
                 ) as string
-                this.$notify(successMsg, '', 'success', 5_000)
+                this.$notify(successMsg, '', 'info', 5_000)
                 this.clear()
                 this.getContractInstance!()
               }

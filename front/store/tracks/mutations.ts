@@ -9,14 +9,9 @@ export default {
     web3Copy.isInjected = result.injectedWeb3
     web3Copy.web3Instance = result.web3
     state.web3 = web3Copy
-    // pollWeb3()
   },
   setAccount(state: ITracksState, payload) {
     state.web3.coinbase = payload
-  },
-  pollWeb3Instance(state: ITracksState, payload) {
-    state.web3.coinbase = payload.coinbase
-    state.web3.balance = parseInt(payload.balance, 10)
   },
   registerContractInstance(state: ITracksState, payload) {
     state.contractInstance = () => payload

@@ -29,11 +29,6 @@
         <nuxt-child />
       </div>
     </div>
-    <button
-      v-t="'miscellaneous.contract'"
-      class="enable-button"
-      @click="contract()"
-    />
     <div class="enable">
       <button
         v-if="connection.status === 'disconnected'"
@@ -88,11 +83,6 @@ export default Vue.extend<D, M, C, P>({
   },
   methods: {
     ...mapActions('tracks', ['getAccount', 'getContractInstance']),
-    contract() {
-      try {
-        console.log(this.contractInstance())
-      } catch {}
-    },
     async getTotalBundle() {
       try {
         await this.contractInstance().total_bundleId.call((err, result) => {

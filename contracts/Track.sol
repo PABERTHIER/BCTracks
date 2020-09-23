@@ -65,9 +65,6 @@ using SafeMath for uint256;
                             keccak256(abi.encodePacked(bundles[increment].state)) != keccak256("Sent"));
                 isFound = true;
             }
-            if(isFound){
-                bundles[increment] = bundles[increment+1];
-            }
         }
         if(isFound){
             bundles[total_bundleId] = Bundle( address(0),
