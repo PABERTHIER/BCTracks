@@ -98,7 +98,7 @@ export default Vue.extend<D, M, C, P>({
             return
           }
           await this.contractInstance().Del_Bundle(
-            this.bundleId,
+            this.bundle[3].c[0],
             {
               gas: 300000,
               from: this.web3!.coinbase,

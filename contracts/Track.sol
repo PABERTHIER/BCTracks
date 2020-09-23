@@ -58,12 +58,15 @@ using SafeMath for uint256;
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
         bool isFound = false;
-        for(uint increment = 0; increment <= total_bundleId; increment++){
+        for(uint increment = 0; increment < total_bundleId; increment++){
             if(bundles[increment].id == _singleId){
                 require(    bundles[increment].supplier_key == msg.sender &&
                             bundles[increment].owner_key == msg.sender &&
                             keccak256(abi.encodePacked(bundles[increment].state)) != keccak256("Sent"));
                 isFound = true;
+            }
+            if(isFound){
+                bundles[increment] = bundles[increment+1];
             }
         }
         if(isFound){
