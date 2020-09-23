@@ -113,6 +113,7 @@ export default Vue.extend<D, M, C, P>({
                 ) as string
                 this.$notify(successMsg, '', 'info', 5_000)
                 this.getContractInstance!()
+                this.bundleId = 0
               }
             }
           )
