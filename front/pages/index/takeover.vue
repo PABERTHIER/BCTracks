@@ -150,7 +150,7 @@ export default Vue.extend<D, M, C, P>({
                 const successMsg = this.$t(
                   'pages.index.takeover.submit_success'
                 ) as string
-                this.$notify(successMsg, '', 'success', 5_000)
+                this.$notify(successMsg, '', 'info', 5_000)
                 this.getContractInstance!()
               }
             }
@@ -181,7 +181,7 @@ export default Vue.extend<D, M, C, P>({
                 const successMsg = this.$t(
                   'pages.index.takeover.delivery_success'
                 ) as string
-                this.$notify(successMsg, '', 'success', 5_000)
+                this.$notify(successMsg, '', 'info', 5_000)
                 this.getContractInstance!()
               }
             }

@@ -24,7 +24,7 @@
                 "bundleNumber": "Nombre de lots",
                 "productName": "Nom du produit",
                 "productNumber": "Nombre de produits",
-                "add_success": "Ajout du lot réalisé avec succès !"
+                "add_success": "Ajout du lot en cours ..."
             },
             "buy": {
                 "title": "Acheter un lot",
@@ -34,7 +34,7 @@
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "Certification:",
-                "buy_success": "Achat du lot réalisé avec succès !"
+                "buy_success": "Achat du lot en cours ..."
             },
             "certify": {
                 "title": "Certifier un Lot",
@@ -51,7 +51,7 @@
             "remove" : {
                 "title": "Supprimer un lot",
                 "remove_confirm": "Êtes-vous sûr de vouloir supprimer ce lot ? (Cette action est irréversible)",
-                "remove_success": "Suppression du lot réalisée avec succès !",
+                "remove_success": "Suppression du lot en cours ...",
                 "remove_bundle": "Supprimer",
                 "bundleId": "Id du lot"
             },
@@ -64,8 +64,8 @@
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "Certification:",
-                "submit_success": "Ajout de votre livreur réalisé avec succès !",
-                "delivery_success":"Prise en charge réalisé avec succès !"
+                "submit_success": "Ajout de votre livreur en cours ...",
+                "delivery_success":"Prise en charge en cours ..."
             }
         }
     },
@@ -91,7 +91,6 @@
         "success": "Succès",
         "info": "Info",
         "connected": "Connexion au compte Ethereum réussie !",
-        "contract": "Contrat",
         "sould_be_connected": "Vous devez vous connecter à votre compte Metamask !",
         "cancel": "Retour",
         "ok": "Valider",

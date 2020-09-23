@@ -7,7 +7,6 @@ export interface D {
 export interface M {
   getAccount?: () => void
   getContractInstance?: () => void
-  contract: () => void
   getTotalBundle: () => void
   reload: () => void
   reloaded: () => void
