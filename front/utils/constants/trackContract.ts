@@ -1,4 +1,4 @@
-const address = '0xCB71B00B338E07Fb91949151De5F1157C9998811'
+const address = '0x954995Cc04951E856D74612CAbBeDaca0eD06DBD'
 
 const ABI = [
   {
@@ -30,55 +30,43 @@ const ABI = [
     type: 'function',
   },
   {
-    anonymous: false,
     inputs: [
       {
-        indexed: true,
         internalType: 'address',
-        name: 'previousOwner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'newOwner',
+        name: '_certifier',
         type: 'address',
       },
     ],
-    name: 'OwnershipTransferred',
-    type: 'event',
+    name: 'addCertifier',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: 'uint256',
-        name: '_bundleId',
-        type: 'uint256',
-      },
-    ],
-    name: 'addedEvent',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: '_singleId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'address payable',
-        name: '_new_owner',
+        internalType: 'address',
+        name: '_delivery',
         type: 'address',
       },
     ],
-    name: 'boughtEvent',
-    type: 'event',
+    name: 'addDelivery',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_supplier',
+        type: 'address',
+      },
+    ],
+    name: 'addSupplier',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
@@ -97,6 +85,32 @@ const ABI = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'certifier',
+        type: 'address',
+      },
+    ],
+    name: 'CertifierAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'certifier',
+        type: 'address',
+      },
+    ],
+    name: 'CertifierRemoved',
+    type: 'event',
   },
   {
     inputs: [
@@ -149,6 +163,148 @@ const ABI = [
       },
     ],
     name: 'Delivery_takeOver_Bundle',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'delivery',
+        type: 'address',
+      },
+    ],
+    name: 'DeliveryAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'delivery',
+        type: 'address',
+      },
+    ],
+    name: 'DeliveryRemoved',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_supplier',
+        type: 'address',
+      },
+    ],
+    name: 'removeSupplier',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'supplier',
+        type: 'address',
+      },
+    ],
+    name: 'SupplierAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'supplier',
+        type: 'address',
+      },
+    ],
+    name: 'SupplierRemoved',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: '_bundleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'addedEvent',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: '_singleId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address payable',
+        name: '_new_owner',
+        type: 'address',
+      },
+    ],
+    name: 'boughtEvent',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_certifier',
+        type: 'address',
+      },
+    ],
+    name: 'removeCertifier',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_delivery',
+        type: 'address',
+      },
+    ],
+    name: 'removeDelivery',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -286,6 +442,63 @@ const ABI = [
         internalType: 'string',
         name: 'certstate',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'isCertifier',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'isDelivery',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'isSupplier',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
