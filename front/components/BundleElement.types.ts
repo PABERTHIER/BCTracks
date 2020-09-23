@@ -12,7 +12,7 @@ export interface C {
 }
 
 export interface P {
-  bundleId: number
+  bundleId: number | string
   connection: string
   bundleData?: any
 }
