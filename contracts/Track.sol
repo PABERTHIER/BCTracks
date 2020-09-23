@@ -2,10 +2,10 @@ pragma solidity ^0.7.0;
 
 // SPDX-License-Identifier: GPL-3.0
 
-import "./Ownable.sol";
+import "./Whitelist.sol";
 import "./SafeMath.sol";
 
-contract Track is Ownable {
+contract Track is Whitelist {
 
 using SafeMath for uint256;
 
@@ -36,7 +36,7 @@ using SafeMath for uint256;
     event submitTakeOverEvent ( uint indexed _singleId, address payable _delivery_key);
     event validateTakeOverEvent ( uint indexed _singleId, address payable _delivery_key);
 
-    function Add_Bundle (uint _bundle_id, uint  _bundles_number, string  memory _product_name, uint _product_number ) public {
+    function Add_Bundle (uint _bundle_id, uint  _bundles_number, string  memory _product_name, uint _product_number ) public onlySupplier {
         total_bundleId ++;
         increment_bundleId ++;
         string memory state = "Available";
@@ -54,7 +54,7 @@ using SafeMath for uint256;
         emit addedEvent (increment_bundleId);
     }
 
-    function Del_Bundle (uint _singleId) public {
+    function Del_Bundle (uint _singleId) public onlySupplier {
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
         bool isFound = false;
@@ -148,7 +148,7 @@ using SafeMath for uint256;
         emit submitTakeOverEvent(_singleId, _delivery_key);
     }
 
-    function Delivery_takeOver_Bundle (uint _singleId) public {
+    function Delivery_takeOver_Bundle (uint _singleId) public onlyDelivery {
         // require a valid Bundle
         require(_singleId > 0 && _singleId <= increment_bundleId);
 
@@ -170,7 +170,7 @@ using SafeMath for uint256;
         emit validateTakeOverEvent(_singleId, msg.sender);
     }
 
-    function Change_BundleState (address payable _supplier, uint _bundleId, string memory _bundleState) public returns(bool) {
+    function Change_BundleState (address payable _supplier, uint _bundleId, string memory _bundleState) public onlyCertifier returns(bool) {
         require((   keccak256(abi.encodePacked(_bundleState)) == keccak256("Unsalable") ||
                     keccak256(abi.encodePacked(_bundleState)) == keccak256("Certified")), "Status Unknown");
         bool isFound = false;
