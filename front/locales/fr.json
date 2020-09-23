@@ -34,7 +34,6 @@
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "Certification:",
-                "no_bundle": "Lot non existant ou indisponible.",
                 "buy_success": "Achat du lot réalisé avec succès !"
             },
             "certify": {
@@ -45,7 +44,7 @@
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "État:",
-                "no_bundle": "Lot non existant ou indisponible.",
+                
                 "changing_state_in_process": "Changement d'état du lot en cours.",
                 "unsalable_confirm": "Êtes-vous sûr de vouloir rendre ce lot invendable ? (Cette action est irréversible)"
             },
@@ -53,7 +52,6 @@
                 "title": "Supprimer un lot",
                 "remove_confirm": "Êtes-vous sûr de vouloir supprimer ce lot ? (Cette action est irréversible)",
                 "remove_success": "Suppression du lot réalisée avec succès !",
-                "no_bundle": "Lot non existant ou indisponible.",
                 "remove_bundle": "Supprimer",
                 "bundleId": "Id du lot"
             },
@@ -66,7 +64,6 @@
                 "name": "Nom:",
                 "status": "Status:",
                 "certification": "Certification:",
-                "no_bundle": "Lot non existant ou indisponible.",
                 "submit_success": "Ajout de votre livreur réalisé avec succès !",
                 "delivery_success":"Prise en charge réalisé avec succès !"
             }
@@ -97,6 +94,7 @@
         "contract": "Contrat",
         "sould_be_connected": "Vous devez vous connecter à votre compte Metamask !",
         "cancel": "Retour",
-        "ok": "Valider"
+        "ok": "Valider",
+        "no_bundle": "Lot non existant ou indisponible."
     }
 }

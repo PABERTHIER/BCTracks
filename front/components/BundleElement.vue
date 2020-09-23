@@ -1,6 +1,9 @@
 <template>
   <div class="bundle-element">
     <div v-if="bundle && bundle[6] !== ''" class="bloc-bundle">
+      <div class="reload">
+        <icon name="reload" class="svg-icon" @click="getBundle()" />
+      </div>
       <div>
         <span v-t="'components.lastElements.name'" />
         {{ bundle[6] }}
@@ -27,6 +30,9 @@
       </div>
     </div>
     <div v-else-if="bundleData && bundleData[6] !== ''" class="bloc-bundle">
+      <div class="reload">
+        <icon name="reload" class="svg-icon" @click="getBundle()" />
+      </div>
       <div>
         <span v-t="'components.lastElements.name'" />
         {{ bundleData[6] }}
@@ -78,6 +84,11 @@ export default Vue.extend<D, M, C, P>({
       required: false,
       default: undefined,
     },
+    isReloading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -99,6 +110,12 @@ export default Vue.extend<D, M, C, P>({
     connection(newVal: string) {
       if (newVal === 'connected') {
         this.getBundle()
+      }
+    },
+    isReloading(newVal: boolean) {
+      if (newVal) {
+        this.getBundle()
+        this.$emit('reloaded', this.bundleId)
       }
     },
   },
@@ -133,6 +150,17 @@ export default Vue.extend<D, M, C, P>({
     border-radius: 30px;
     text-align: left;
     width: 300px;
+    position: relative;
+    .reload {
+      position: absolute;
+      top: 5px;
+      left: 245px;
+      cursor: pointer;
+    }
   }
+}
+.svg-icon {
+  height: 32px;
+  width: 32px;
 }
 </style>

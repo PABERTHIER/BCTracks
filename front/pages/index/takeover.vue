@@ -100,7 +100,7 @@ export default Vue.extend<D, M, C, P>({
       return false
     },
     noBundle() {
-      return this.$t('pages.index.buy.no_bundle') as string
+      return this.$t('miscellaneous.no_bundle') as string
     },
   },
   watch: {
