@@ -129,15 +129,16 @@ using SafeMath for uint256;
 
         //Add a delivery purpose
         for(uint increment = 0; increment <= total_bundleId; increment++){
-            if(bundles[increment].id == _singleId){
+            if(bundles[increment].id == _singleId){      
                 require(keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("In Process") ||
                         keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Issued") ||
                         keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Bundle Recall"));
                 if(keccak256(abi.encodePacked(bundles[increment].state)) ==  keccak256("Issued")){
+                    require(bundles[increment].owner_key == msg.sender);
                     bundles[increment].delivery_key = address(0);
                     bundles[increment].state = "Received";
                 }else{
-                    require(_delivery_key != address(0));
+                    require(_delivery_key != address(0) && bundles[increment].supplier_key == msg.sender );
                     bundles[increment].delivery_key = _delivery_key;
                 }
             }
