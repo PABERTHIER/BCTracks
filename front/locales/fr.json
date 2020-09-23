@@ -49,7 +49,17 @@
                 "unsalable_confirm": "Êtes-vous sûr de vouloir rendre ce lot invendable ? (Cette action est irréversible)"
             },
             "takeover": {
-                "title": "Prise en charge"
+                "title": "Prise en charge",
+                "bundleId": "Id du lot",
+                "addressdelivery": "Adresse du livreur",
+                "delivery_takeover_bundle":"Accepter la livraison",
+                "submit_takeover_bundle":"Renseigner mon livreur",
+                "name": "Nom:",
+                "status": "Status:",
+                "certification": "Certification:",
+                "no_bundle": "Lot non existant ou indisponible.",
+                "submit_success": "Ajout de votre livreur réalisé avec succès !",
+                "delivery_success":"Prise en charge réalisé avec succès !"
             }
         }
     },
